@@ -151,9 +151,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Error.h" />
+    <ClInclude Include="In.h" />
+    <ClInclude Include="Log.h" />
+    <ClInclude Include="Parm.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Error.cpp" />
+    <ClCompile Include="In.cpp" />
+    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="Parm.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

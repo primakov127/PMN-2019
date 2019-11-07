@@ -11,14 +11,16 @@
 #include <ctime>
 #include <mbstring.h>
 
-// работа с протоколом
+// Работа с протоколом
 #include "Log.h"
-// обработка ошибок
+// Обработка ошибок
 #include "Error.h"
-// обработка параметров
+// Обработка параметров
 #include "Parm.h"
-// ввод исходного файла
+// Ввод исходного файла
 #include "In.h"
+// Разбиение на лексемы
+#include "TOKEN.h"
 
 //#include "LT.h"
 //#include "IT.h"
