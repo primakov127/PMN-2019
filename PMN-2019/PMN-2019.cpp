@@ -22,6 +22,7 @@ int _tmain(int argc, _TCHAR ** argv)
 		Log::WriteParm(log, parm);
 		In::IN in = In::getin(parm.in, parm.out);
 		Log::WriteIn(log, in);
+		TOKEN::TokenTable tokentable = TOKEN::tokenize(in);
 	//	LEX::LexAnal(parm.in, parm.out, lex.lextable, lex.idtable);
 
 	//	//polishNotation(62, lextable, idtable);
@@ -39,6 +40,7 @@ int _tmain(int argc, _TCHAR ** argv)
 	//	// 62
 	//	// 130
 	//	LT::outTable(lex.lextable, parm.out);
+		TOKEN::SaveTokenTableInFile(tokentable, parm.tkn);
 		Log::Close(log);
 	}
 	catch (Error::ERROR e)

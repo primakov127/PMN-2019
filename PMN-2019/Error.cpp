@@ -9,6 +9,7 @@ namespace Error
 	// 100-109	 Ошибки параметров
 	// 110-119	 Ошибки открытия и чтения файлов
 	// 120-129	 Ошибки заполнения таблиц Лексем и Идентификаторов
+	// 130-139	 Ошибки заполнения таблицы токенов
 
 	// Таблица ошибок
 	ERROR errors[ERROR_MAX_ENTRY] =
@@ -28,7 +29,8 @@ namespace Error
 		ERROR_ENTRY(110,"Ошибка при открытии файла с исходным кодом (-in)"),
 		ERROR_ENTRY(111,"Недопустимый символ в исходном файле (-in)"),
 		ERROR_ENTRY(112,"Ошибка при создании файла протокола (-log)"),
-		ERROR_ENTRY_NODEF(113),ERROR_ENTRY_NODEF(114),ERROR_ENTRY_NODEF(115),
+		ERROR_ENTRY(113,"Ошибка при открытии файла с таблицой токенов (-tkn)"),
+		ERROR_ENTRY_NODEF(114),ERROR_ENTRY_NODEF(115),
 		ERROR_ENTRY_NODEF(116),ERROR_ENTRY_NODEF(117),ERROR_ENTRY_NODEF(118),ERROR_ENTRY_NODEF(119),
 		ERROR_ENTRY(120, "Превышена емкость таблицы лексем"),
 		ERROR_ENTRY(121, "Превышено количество строк в таблице лексем"),
@@ -38,7 +40,10 @@ namespace Error
 		ERROR_ENTRY(125, "В таблице идентификаторов отсутствует строка с заданным номером"),
 		ERROR_ENTRY_NODEF(126),ERROR_ENTRY_NODEF(127),ERROR_ENTRY_NODEF(128),ERROR_ENTRY_NODEF(129),
 		ERROR_ENTRY(130, "Превышена емкость таблицы токенов"),
-		ERROR_ENTRY_NODEF(131),ERROR_ENTRY_NODEF(132),ERROR_ENTRY_NODEF(133),ERROR_ENTRY_NODEF(134),
+		ERROR_ENTRY(131, "Превышено колличество токенов в таблице токенов"),
+		ERROR_ENTRY(132, "Ошибка с разбиением исходного текста на токены"),
+		ERROR_ENTRY(133, "Ошибка с разбором строкового литерала"),
+		ERROR_ENTRY(134, "Неожиданный переход на новую строку"),
 		ERROR_ENTRY_NODEF(135),ERROR_ENTRY_NODEF(136),ERROR_ENTRY_NODEF(137),ERROR_ENTRY_NODEF(138),ERROR_ENTRY_NODEF(139),
 		ERROR_ENTRY_NODEF10(140),ERROR_ENTRY_NODEF10(150),
 		ERROR_ENTRY_NODEF10(160),ERROR_ENTRY_NODEF10(170),ERROR_ENTRY_NODEF10(180),ERROR_ENTRY_NODEF10(190),

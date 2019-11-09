@@ -73,6 +73,7 @@ namespace Log
 		*log.stream << "Количество символов: " << in.size << std::endl;
 		*log.stream << "Проигнорировано:     " << in.ignor << std::endl;
 		*log.stream << "Количество строк:    " << in.lines << std::endl;
+		*log.stream << "--------------------------" << std::endl;
 	}
 
 	void WriteError(LOG log, Error::ERROR error)

@@ -17,6 +17,8 @@ namespace Parm
 				wcscpy_s(Input.out, argv[i] + wcslen(PARM_OUT));
 			else if (wcsstr(argv[i], PARM_LOG))
 				wcscpy_s(Input.log, argv[i] + wcslen(PARM_LOG));
+			else if (wcsstr(argv[i], PARM_TKN))
+				wcscpy_s(Input.tkn, argv[i] + wcslen(PARM_TKN));
 		}
 		if (wcslen(Input.in) == 0)
 			throw ERROR_THROW(100);
@@ -29,6 +31,11 @@ namespace Parm
 		{
 			wcscpy_s(Input.log, Input.in);
 			wcsncat_s(Input.log, PARM_LOG_DEFAULT_EXT, wcslen(PARM_LOG_DEFAULT_EXT));
+		}
+		if (wcslen(Input.tkn) == 0)
+		{
+			wcscpy_s(Input.tkn, Input.in);
+			wcsncat_s(Input.tkn, PARM_TKN_DEFAULT_EXT, wcslen(PARM_TKN_DEFAULT_EXT));
 		}
 		return Input;
 	}

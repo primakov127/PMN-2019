@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#define TOKEN_SEPARATORS "+-*/=(){},;"
+#define TOKEN_SEPARATORS " \t\n+-*/=(){},;"
 #define TOKEN_MAXSIZE 4096
 
 namespace TOKEN
@@ -20,6 +20,9 @@ namespace TOKEN
 	};
 
 	TokenTable CreateTokenTable(int size);
-	TokenTable* tokenize(In::IN in);
+	void addToken(TokenTable& tokens, char* token, int line);
+	TokenTable tokenize(In::IN in);
 	bool isSeparator(char ch);
+	char* sepToken(char sep);
+	void SaveTokenTableInFile(TokenTable tokens, wchar_t outfile[]);
 }

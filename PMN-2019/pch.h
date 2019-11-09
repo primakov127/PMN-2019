@@ -10,6 +10,7 @@
 #include <fstream>
 #include <ctime>
 #include <mbstring.h>
+#include <iomanip>
 
 // Работа с протоколом
 #include "Log.h"
