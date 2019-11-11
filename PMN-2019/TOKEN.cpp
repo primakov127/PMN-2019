@@ -37,7 +37,7 @@ namespace TOKEN
 			if (in.text[CharPointer] == '\'')
 			{
 				if (NumOfCharRecorded)
-					throw ERROR_THROW_IN(132, CurrentLine, CharPointer);
+					throw ERROR_THROW_IN(132, CurrentLine, LinePosition);
 
 				do
 				{

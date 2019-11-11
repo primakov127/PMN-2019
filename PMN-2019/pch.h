@@ -11,6 +11,7 @@
 #include <ctime>
 #include <mbstring.h>
 #include <iomanip>
+#include <string>
 
 // Работа с протоколом
 #include "Log.h"
@@ -20,11 +21,13 @@
 #include "Parm.h"
 // Ввод исходного файла
 #include "In.h"
-// Разбиение на лексемы
+// Разбиение на токены
 #include "TOKEN.h"
+// Таблица лексем
+#include "LT.h"
+// Таблица идентификаторов
+#include "IT.h"
 
-//#include "LT.h"
-//#include "IT.h"
 // реализация КА + ф-ция разбора
 //#include "FST.h"
 // лексический анализатор

@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#define TOKEN_SEPARATORS " \t\n+-*/=(){},;"
+#define TOKEN_SEPARATORS " \t\n+-*/%=(){},;"
 #define TOKEN_MAXSIZE 4096
 
 namespace TOKEN
@@ -10,10 +10,12 @@ namespace TOKEN
 	{
 		char token[64];
 		int line;
+		//std::string areaOfVisibility;
 	};
 
 	struct TokenTable
 	{
+		//int CountOfWord;  ол-во сслов в тексте дл€ создани€ таблицы лексем
 		int maxsize;
 		int size;
 		Token* table;
