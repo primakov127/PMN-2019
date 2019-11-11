@@ -8,7 +8,7 @@ namespace TOKEN
 
 	struct Token
 	{
-		char token[64];
+		char token[512];
 		int line;
 		//std::string areaOfVisibility;
 	};

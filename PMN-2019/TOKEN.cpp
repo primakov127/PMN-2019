@@ -5,7 +5,7 @@ namespace TOKEN
 	TokenTable tokenize(In::IN in)
 	{
 		TokenTable tokens = CreateTokenTable(TOKEN_MAXSIZE);
-		char buffer[64];
+		char buffer[512];
 		int NumOfCharRecorded = 0;
 		int CurrentLine = 0;
 		int LinePosition = 0;
@@ -43,6 +43,9 @@ namespace TOKEN
 				{
 					if (in.text[CharPointer] == '\n')
 						throw ERROR_THROW_IN(133, CurrentLine, 0);
+					if (NumOfCharRecorded == 256)
+						throw ERROR_THROW_IN(135, CurrentLine, 0);
+
 
 					buffer[NumOfCharRecorded] = in.text[CharPointer];
 					CharPointer++;
