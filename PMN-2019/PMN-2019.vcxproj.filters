@@ -42,6 +42,12 @@
     <ClInclude Include="IT.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="FST.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphs.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -69,6 +75,12 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="IT.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="LEX.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="FST.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

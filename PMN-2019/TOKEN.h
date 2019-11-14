@@ -10,7 +10,6 @@ namespace TOKEN
 	{
 		char token[512];
 		int line;
-		//std::string areaOfVisibility;
 	};
 
 	struct TokenTable

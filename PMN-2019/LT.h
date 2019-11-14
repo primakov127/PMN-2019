@@ -11,11 +11,12 @@
 #define LEX_FUNCTION    'f'             // лексема для function
 #define LEX_DECLARE     'd'             // лексема для declare
 #define LEX_RETURN      'r'             // лексема для return
-#define LEX_PRINT       'p'             // лексема для print
+#define LEX_OUT			'o'             // лексема для out
+#define LEX_MAIN		'm'				// лексема для main
 #define LEX_SEMICOLON   ';'             // лексема для ;
 #define LEX_COMMA       ','             // лексема для ,
 #define LEX_LEFTBRACE   '{'             // лексема для {
-#define LEX_BRACELET    '}'             // лексема для }
+#define LEX_RIGHTBRACE  '}'             // лексема для }
 #define LEX_LEFTHESIS   '('             // лексема для (
 #define LEX_RIGHTHESIS  ')'             // лексема для )
 #define	LEX_OPERATOR	'v'				// лексема для операторов
@@ -24,6 +25,9 @@
 #define LEX_STAR        '*'             // лексема для *
 #define LEX_DIRSLASH    '/'             // лексема для /
 #define LEX_REMDIV		'%'				// лексема для %
+#define LEX_EQUAL		'='				// лексема для =
+#define LEX_LEFTRVK		'['				// лексема для [
+#define LEX_RIGHTRVK	']'				// лексема для ]
 
 namespace LT                            // таблица лексем
 {

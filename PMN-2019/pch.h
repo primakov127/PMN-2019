@@ -1,6 +1,6 @@
 ﻿#ifndef PCH_H
 #define PCH_H
-
+#define LENGTHOF(x)(sizeof(x)/sizeof(*x))
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <SDKDDKVer.h>
@@ -27,9 +27,11 @@
 #include "LT.h"
 // Таблица идентификаторов
 #include "IT.h"
+// Реализация КА + ф-ция разбора
+#include "FST.h"
+// Графы для КА
+#include "Graphs.h"
 
-// реализация КА + ф-ция разбора
-//#include "FST.h"
 // лексический анализатор
 //#include "LEX.h"
 // польская запись

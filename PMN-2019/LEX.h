@@ -9,4 +9,11 @@ namespace LEX
 		LT::LexTable lextable;
 	};
 
+	struct GRAPH
+	{
+		char lex;
+		FST::FST graph;
+	};
+
+	char lexType(char *token);
 }
