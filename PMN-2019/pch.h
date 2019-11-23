@@ -2,6 +2,7 @@
 #define PCH_H
 #define LENGTHOF(x)(sizeof(x)/sizeof(*x))
 #define _CRT_SECURE_NO_WARNINGS
+#define _CRT_NONSTDC_NO_DEPRECATE
 
 #include <SDKDDKVer.h>
 #include <stdio.h>
@@ -12,6 +13,7 @@
 #include <mbstring.h>
 #include <iomanip>
 #include <string>
+#include <stack>
 
 // Работа с протоколом
 #include "Log.h"
@@ -31,9 +33,9 @@
 #include "FST.h"
 // Графы для КА
 #include "Graphs.h"
-
 // лексический анализатор
-//#include "LEX.h"
+#include "LEX.h"
+
 // польская запись
 //#include "PolishNotation.h"
 //#include "Greibach.h"

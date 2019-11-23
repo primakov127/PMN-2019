@@ -5,7 +5,7 @@ namespace TOKEN
 	TokenTable tokenize(In::IN in)
 	{
 		TokenTable tokens = CreateTokenTable(TOKEN_MAXSIZE);
-		char buffer[512];
+		char buffer[258];
 		int NumOfCharRecorded = 0;
 		int CurrentLine = 0;
 		int LinePosition = 0;
@@ -13,12 +13,15 @@ namespace TOKEN
 
 		for (int CharPointer = 0; in.text[CharPointer] != IN_CODE_ENDL; CharPointer++)
 		{
+			if (NumOfCharRecorded == 256)
+				throw ERROR_THROW_IN(137, CurrentLine, LinePosition - NumOfCharRecorded);
+
 			if (isSeparator(in.text[CharPointer]))
 			{
 				if (NumOfCharRecorded)
 				{
 					buffer[NumOfCharRecorded] = IN_CODE_ENDL;
-					addToken(tokens, buffer, CurrentLine);
+					addToken(tokens, buffer, CurrentLine, LinePosition - NumOfCharRecorded);
 					NumOfCharRecorded = 0;
 				}
 
@@ -26,11 +29,13 @@ namespace TOKEN
 				{
 					CurrentLine++;
 					LinePosition = 0;
+					continue;
 				}
 
 				if (in.text[CharPointer] != ' ' && in.text[CharPointer] != '\t' && in.text[CharPointer] != '\n')
-					addToken(tokens, sepToken(in.text[CharPointer]), CurrentLine);
+					addToken(tokens, sepToken(in.text[CharPointer]), CurrentLine, LinePosition - NumOfCharRecorded);
 
+				LinePosition++;
 				continue;
 			}
 
@@ -50,12 +55,13 @@ namespace TOKEN
 					buffer[NumOfCharRecorded] = in.text[CharPointer];
 					CharPointer++;
 					NumOfCharRecorded++;
+					LinePosition++;
 				} while (in.text[CharPointer] != '\'');
 				buffer[NumOfCharRecorded] = in.text[CharPointer];
 				NumOfCharRecorded++;
 				
 				buffer[NumOfCharRecorded] = IN_CODE_ENDL;
-				addToken(tokens, buffer, CurrentLine);
+				addToken(tokens, buffer, CurrentLine, LinePosition - NumOfCharRecorded);
 				NumOfCharRecorded = 0;
 
 				continue;
@@ -106,7 +112,7 @@ namespace TOKEN
 		return tokentable;
 	}
 
-	void addToken(TokenTable& tokens, char* token, int line)
+	void addToken(TokenTable& tokens, char* token, int line, int linePosition)
 	{
 		if (tokens.size > tokens.maxsize)
 			throw ERROR_THROW(131);
@@ -114,6 +120,7 @@ namespace TOKEN
 		Token item;
 		strcpy(item.token, token);
 		item.line = line;
+		item.linePosition = linePosition;
 
 		tokens.table[tokens.size] = item;
 		tokens.size++;

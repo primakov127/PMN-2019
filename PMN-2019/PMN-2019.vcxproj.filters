@@ -84,4 +84,12 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Debug\in.txt.out">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="..\Debug\in.txt.lex">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+  </ItemGroup>
 </Project>

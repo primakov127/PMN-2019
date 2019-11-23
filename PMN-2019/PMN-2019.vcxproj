@@ -181,6 +181,10 @@
     </ClCompile>
     <ClCompile Include="PMN-2019.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Debug\in.txt.lex" />
+    <None Include="..\Debug\in.txt.out" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

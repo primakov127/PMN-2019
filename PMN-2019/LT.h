@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 
 #define LEXEMA_FIXSIZE 1                // фиксированный размер лексемы
 #define LT_MAXSIZE 4096                 // максимальное количество строк в таблице лексем
@@ -8,6 +9,9 @@
 #define LEX_STRING      's'             // лексема для string
 #define LEX_ID          'i'             // лексема для идентификатора
 #define LEX_LITERAL     'l'             // лексема для литерала
+#define LEX_IF			'q'				// лексема для if
+#define LEX_THEN		'1'				// лексема для then
+#define LEX_ELSE		'2'				// лексема для else
 #define LEX_FUNCTION    'f'             // лексема для function
 #define LEX_DECLARE     'd'             // лексема для declare
 #define LEX_RETURN      'r'             // лексема для return
@@ -61,5 +65,7 @@ namespace LT                            // таблица лексем
 
 	void Delete(LexTable& lextable);    // удалить таблицу лексем (освободить память)
 	void SaveLexTableInFile(LexTable lextable, wchar_t outfile[]);
-
+	void showTable(LexTable& lextable, wchar_t outfile[]);
+	Entry createEntry(char lexema, int line);
+	Entry createEntry(char lexema, int line, int idTI);
 };

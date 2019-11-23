@@ -1,19 +1,17 @@
 #pragma once
 #include "pch.h"
+using namespace std;
 
-namespace LEX
+namespace Lex
 {
 	struct LEX
 	{
 		IT::IdTable idtable;
 		LT::LexTable lextable;
+		LEX(int lexTableSize, int idTableSize);
 	};
 
-	struct GRAPH
-	{
-		char lex;
-		FST::FST graph;
-	};
-
-	char lexType(char *token);
+	char lexType(TOKEN::Token token);
+	LEX fillingInTables(TOKEN::TokenTable tokenTable);
+	int searchID(stack<int> areaOfVisibility, string id, IT::IdTable& idtable);
 }

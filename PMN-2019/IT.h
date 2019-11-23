@@ -8,15 +8,24 @@
 
 namespace IT                                    // Таблица идентификаторов
 {
-	enum IDDATATYPE { INT = 1, STR = 2 };					// типы данных идентификаторов: integer, string
-	enum IDTYPE { V = 1, F = 2, P = 3, L = 3 };				// типы идентификаторов: переменная, функция, параметр, литерал
+	enum IDDATATYPE 
+	{ NON = 0, INT = 1, STR = 2 };					// типы данных идентификаторов: integer, string 
+
+	enum IDTYPE 
+	{ 
+		N = 0,			// Без типа
+		F = 1,			// Функция
+		V = 2,			// Переменная
+		P = 3,			// Параметр у функции
+		L = 4			// Литерал
+	};		// типы идентификаторов: переменная, функция, параметр, литерал
 
 	struct Entry                                // Строка таблицы идентификаторов
 	{
 		int         idxfirstLE;                 // Индекс первого вхождения в таблице лексем
 		std::string id;							// Идентификатор
-		IDDATATYPE  iddatatype;                 // Тип данных
-		IDTYPE      idtype;                     // Тип идентификаторов
+		IDDATATYPE  idDataType;                 // Тип данных
+		IDTYPE      idType;                     // Тип идентификаторов
 		struct
 		{
 			int vint;                           // Значение integer
@@ -55,4 +64,8 @@ namespace IT                                    // Таблица идентификаторов
 	);
 
 	void Delete(IdTable& idtable);              // Удалить таблицу лексем (освободить память)
+	Entry createEntry(int lineLT, std::string id, IDDATATYPE idDataType, IDTYPE idType);
+	Entry createEntry(int lineLT, std::string id, IDDATATYPE idDataType, IDTYPE idType, int vint);
+	Entry createEntry(int lineLT, std::string id, IDDATATYPE idDataType, IDTYPE idType, std::string vstr);
+	void showTable(IdTable& idtable, wchar_t outfile[]);
 }

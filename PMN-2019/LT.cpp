@@ -63,4 +63,50 @@ namespace LT
 
 		out.close();
 	}
+
+	void showTable(LexTable& lextable, wchar_t outfile[])
+	{
+		std::ofstream file(outfile);
+		if (!file.is_open())
+			throw ERROR_THROW(114);
+
+		file << std::setfill('=') << std::setw(23) << "LEX TABLE" << std::setw(17) << "\n\n";
+		file << '+' << std::setfill('-') << std::setw(6) << '+' << std::setw(10) <<
+			'+' << std::setw(10) << '+' << std::setw(11) << '+' << std::endl;
+		file << '|' << std::setfill(' ') << std::setw(5) << std::left << "¹" << '|' << std::setw(9) << std::left << "Line" << '|'
+			<< std::setw(9) << std::left << "Lexema" << '|' << std::setw(10) << std::left << "ID from IT" << '|' << std::endl;
+		
+		for (int i = 0; i < lextable.size; i++)
+		{
+			file << '|' << std::setfill(' ') << std::setw(5) << std::left << i << '|' << std::setw(9) << std::left << lextable.table[i].sn << '|'
+				<< std::setw(9) << std::left << lextable.table[i].lexema << '|';
+
+			if (lextable.table[i].idxTI == TI_NULLIDX)
+				file << std::setw(10) << std::left << '-' << '|' << std::endl;
+			else
+				file << std::setw(10) << std::left << lextable.table[i].idxTI << '|' << std::endl;
+		}
+
+		file.close();
+	}
+
+	Entry createEntry(char lexema, int line)
+	{
+		Entry entry;
+		entry.lexema = lexema;
+		entry.sn = line;
+		entry.idxTI = LT_TI_NULLTDX;
+
+		return entry;
+	}
+
+	Entry createEntry(char lexema, int line, int idTI)
+	{
+		Entry result;
+		result.lexema = lexema;
+		result.sn = line;
+		result.idxTI = idTI;
+
+		return result;
+	}
 }

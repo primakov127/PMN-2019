@@ -40,16 +40,15 @@ namespace FST
 
 	FST::FST(short ns, NODE n, ...)
 	{
-		this->nodes = new NODE[ns];
-		NODE* temp = &n;
-		short i = 0;
-		this->nstates = ns;
-		this->rstates = new short[ns];
-		while (i < ns)
-		{
-			this->nodes[i] = *(temp + i);
-			i++;
-		};
+		nstates = ns;
+		nodes = new NODE[ns];
+		NODE *p = &n;
+		for (int k = 0; k < ns; k++)
+			nodes[k] = p[k];
+		rstates = new short[nstates];
+		memset(rstates, 0xff, sizeof(short)*nstates);
+		rstates[0] = 0;
+		position = -1;
 
 	}
 
@@ -66,7 +65,10 @@ namespace FST
 			this->nodes[i] = *(temp + i);
 			i++;
 		};
+		rstates[0] = 0;
+		position = -1;
 	}
+
 
 	/*Реализация ф-ции execute()*/
 

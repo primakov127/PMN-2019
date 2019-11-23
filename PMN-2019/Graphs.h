@@ -92,7 +92,7 @@ struct GRAPH
 
 #define GRAPH_STRING_LITERAL \
 	4, \
-	FST::NODE(2, FST::RELATION('"', 1), FST::RELATION('"', 2)), \
+	FST::NODE(2, FST::RELATION('\'', 1), FST::RELATION('\'', 2)), \
 	FST::NODE(276, \
 		FST::RELATION('A', 1), FST::RELATION('B', 1), FST::RELATION('C', 1), FST::RELATION('D', 1), FST::RELATION('E', 1), FST::RELATION('F', 1), \
 		FST::RELATION('G', 1), FST::RELATION('H', 1), FST::RELATION('I', 1), FST::RELATION('J', 1), FST::RELATION('K', 1), FST::RELATION('L', 1), \
@@ -148,7 +148,7 @@ struct GRAPH
 		FST::RELATION('?', 2), FST::RELATION('!', 2), FST::RELATION(';', 2), FST::RELATION(':', 2), FST::RELATION('-', 2), FST::RELATION(')', 2), \
 		FST::RELATION('(', 2)), \
 		\
-	FST::NODE(1, FST::RELATION('"', 3)), \
+	FST::NODE(1, FST::RELATION('\'', 3)), \
 	FST::NODE()
 
 #define GRAPH_DECLARE \
@@ -213,8 +213,30 @@ struct GRAPH
 	FST::NODE(1,FST::RELATION('n',6)), \
 	FST::NODE()
 
+#define GRAPH_IF \
+	3, \
+	FST::NODE(1,FST::RELATION('i',1)), \
+	FST::NODE(1,FST::RELATION('f',2)), \
+	FST::NODE()
+
+#define GRAPH_THEN \
+	5, \
+	FST::NODE(1,FST::RELATION('t',1)), \
+	FST::NODE(1,FST::RELATION('h',2)), \
+	FST::NODE(1,FST::RELATION('e',3)), \
+	FST::NODE(1,FST::RELATION('n',4)), \
+	FST::NODE()
+
+#define GRAPH_ELSE \
+	5, \
+	FST::NODE(1,FST::RELATION('e',1)), \
+	FST::NODE(1,FST::RELATION('l',2)), \
+	FST::NODE(1,FST::RELATION('s',3)), \
+	FST::NODE(1,FST::RELATION('e',4)), \
+	FST::NODE()
+
 #define GRAPH_OUT \
-	6,	\
+	4,	\
 	FST::NODE(1, FST::RELATION('o', 1)), \
 	FST::NODE(1, FST::RELATION('u', 2)), \
 	FST::NODE(1, FST::RELATION('t', 3)), \
