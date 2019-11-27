@@ -12,11 +12,14 @@
 #define LEX_IF			'q'				// лексема для if
 #define LEX_THEN		'1'				// лексема для then
 #define LEX_ELSE		'2'				// лексема для else
+#define LEX_WHILE		'w'				// лексема для while
 #define LEX_FUNCTION    'f'             // лексема для function
 #define LEX_DECLARE     'd'             // лексема для declare
 #define LEX_RETURN      'r'             // лексема для return
 #define LEX_OUT			'o'             // лексема для out
 #define LEX_MAIN		'm'				// лексема для main
+#define LEX_POW			'p'				// лексема для встроенной ф-ции pow()
+#define LEX_ABS			'a'				// лексема для встроенной ф-ции abs()
 #define LEX_SEMICOLON   ';'             // лексема для ;
 #define LEX_COMMA       ','             // лексема для ,
 #define LEX_LEFTBRACE   '{'             // лексема для {

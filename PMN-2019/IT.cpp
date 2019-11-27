@@ -165,9 +165,10 @@ namespace IT
 
 			file << '|';
 			file << std::endl;
+			
 		}
-		file << std::setw(25) << std::setfill('-') << std::setw(25);
-
+		//file << std::setw(25) << std::setfill('-') << std::setw(25);
+		
 		file.close();
 	}
 }

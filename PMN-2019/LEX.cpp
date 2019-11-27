@@ -37,7 +37,14 @@ namespace Lex
 		{ LEX_IF, FST::FST(GRAPH_IF) },
 		{ LEX_THEN, FST::FST(GRAPH_THEN) },
 		{ LEX_ELSE, FST::FST(GRAPH_ELSE) },
-		{ LEX_ID, FST::FST(GRAPH_ID) }
+		{ LEX_WHILE, FST::FST(GRAPH_WHILE) },
+		{ LEX_LITERAL, FST::FST(GRAPH_INT_LITERAL_2) },
+		{ LEX_LITERAL, FST::FST(GRAPH_INT_LITERAL_8) },
+		{ LEX_LITERAL, FST::FST(GRAPH_INT_LITERAL_16) },
+		{ LEX_ABS, FST::FST(GRAPH_ABS) },
+		{ LEX_POW, FST::FST(GRAPH_POW) },
+		{ LEX_LITERAL, FST::FST(GRAPH_INT_LITERAL_16) },
+		{ LEX_ID, FST::FST(GRAPH_ID) }		
 	};
 
 	
@@ -91,19 +98,33 @@ namespace Lex
 				idDataType = IT::IDDATATYPE::NON;
 				break;
 			case LEX_LITERAL:
-				if (tokenTable.table[index].token[0] == '\'')
+				if (tokenTable.table[index].token[0] == '\"')
 				{
 					id = "str" + to_string(numOfLit++);
 					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::STR, IT::IDTYPE::L, string(tokenTable.table[index].token)));
 				}
 				else
 				{
-					id = "int" + to_string(numOfLit++);
-					int vint = atoi(tokenTable.table[index].token);
-					if (vint > INT8_MAX)
+					int vint;
+					switch (tokenTable.table[index].token[strlen(tokenTable.table[index].token) - 1])
+					{
+					case 'b':
+						vint = strtol(tokenTable.table[index].token, NULL, 2);
+						break;
+					case 'o':
+						vint = strtol(tokenTable.table[index].token, NULL, 8);
+						break;
+					case 'h':
+						vint = strtol(tokenTable.table[index].token, NULL, 16);
+						break;
+					default:
+						vint = strtol(tokenTable.table[index].token, NULL, 10);
+						break;
+					}
+					if (abs(vint) > INTEGER_MAX)
 						throw ERROR_THROW_IN(138, tokenTable.table[index].line, tokenTable.table[index].linePosition);
-					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::INT, IT::IDTYPE::L, atoi(tokenTable.table[index].token)));
-					// max value = int(bite)
+					id = "int" + to_string(numOfLit++);
+					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::INT, IT::IDTYPE::L, vint));
 				}
 				LT::Add(lex.lextable, LT::createEntry(lexema, tokenTable.table[index].line, lex.idtable.size - 1));
 				break;

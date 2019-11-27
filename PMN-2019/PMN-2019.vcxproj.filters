@@ -92,4 +92,12 @@
       <Filter>Файлы ресурсов</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Debug\in.txt.log">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="..\Debug\in.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

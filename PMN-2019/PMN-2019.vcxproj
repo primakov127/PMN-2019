@@ -185,6 +185,10 @@
     <None Include="..\Debug\in.txt.lex" />
     <None Include="..\Debug\in.txt.out" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Debug\in.txt" />
+    <Text Include="..\Debug\in.txt.log" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
