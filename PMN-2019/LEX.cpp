@@ -1,25 +1,33 @@
 #include "pch.h"
 using namespace std;
 
-namespace Lex
+namespace Lexer
 {
 	LEX::LEX(int lexTableSize, int idTableSize)
 	{
 		this->lextable = LT::Create(lexTableSize);
 		this->idtable = IT::Create(idTableSize);
-	}
+	};
+
+	LEX::LEX()
+	{
+
+	};
 
 	GRAPH graph[] =
 	{
-		{ LEX_INTEGER, FST::FST(GRAPH_INTEGER) },
+		{ LEX_DIG, FST::FST(GRAPH_DIG) },
 		{ LEX_STRING, FST::FST(GRAPH_STRING) },
+		{ LEX_BOOL, FST::FST(GRAPH_BOOL) },
 		{ LEX_FUNCTION, FST::FST(GRAPH_FUNCTION) },
-		{ LEX_DECLARE, FST::FST(GRAPH_DECLARE) },
+		{ LEX_NEW, FST::FST(GRAPH_NEW) },
 		{ LEX_RETURN, FST::FST(GRAPH_RETURN) },
 		{ LEX_OUT, FST::FST(GRAPH_OUT) },
 		{ LEX_MAIN, FST::FST(GRAPH_MAIN) },
 		{ LEX_LITERAL, FST::FST(GRAPH_INT_LITERAL) },
 		{ LEX_LITERAL, FST::FST(GRAPH_STRING_LITERAL) },
+		{ LEX_LITERAL, FST::FST(GRAPH_BOOL_TRUE) },
+		{ LEX_LITERAL, FST::FST(GRAPH_BOOL_FALSE) },
 		{ LEX_SEMICOLON, FST::FST(GRAPH_SEMICOLON) },
 		{ LEX_COMMA, FST::FST(GRAPH_COMMA) },
 		{ LEX_LEFTBRACE, FST::FST(GRAPH_LEFTBRACE_OPEN) },
@@ -33,9 +41,10 @@ namespace Lex
 		{ LEX_STAR, FST::FST(GRAPH_STAR) },
 		{ LEX_DIRSLASH, FST::FST(GRAPH_DIRSLASH) },
 		{ LEX_REMDIV, FST::FST(GRAPH_REMDIV) },
+		{ LEX_LESS, FST::FST(GRAPH_LESS) },
+		{ LEX_GREAT, FST::FST(GRAPH_GREAT) },
 		{ LEX_EQUAL, FST::FST(GRAPH_EQUALS) },
 		{ LEX_IF, FST::FST(GRAPH_IF) },
-		{ LEX_THEN, FST::FST(GRAPH_THEN) },
 		{ LEX_ELSE, FST::FST(GRAPH_ELSE) },
 		{ LEX_WHILE, FST::FST(GRAPH_WHILE) },
 		{ LEX_LITERAL, FST::FST(GRAPH_INT_LITERAL_2) },
@@ -64,6 +73,8 @@ namespace Lex
 	LEX fillingInTables(TOKEN::TokenTable tokenTable)
 	{
 		LEX lex = LEX(4096, 4096);
+		/*lex.idtable = IT::Create(4096);
+		lex.lextable = LT::Create(4096);*/
 		char lexema;										// Лексема для LT
 		string id;											// id для IT
 		int lineIT = TI_NULLIDX;											// Индекс в IT
@@ -103,6 +114,23 @@ namespace Lex
 					id = "str" + to_string(numOfLit++);
 					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::STR, IT::IDTYPE::L, string(tokenTable.table[index].token)));
 				}
+				else if (tokenTable.table[index].token[0] == 't' || tokenTable.table[index].token[0] == 'f')
+				{
+					bool t;
+					switch (tokenTable.table[index].token[0])
+					{
+					case 't':
+						t = 1;
+						break;
+					case 'f':
+						t = 0;
+						break;
+					default:
+						break;
+					}
+					id = "bool" + to_string(numOfLit++);
+					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::INT, IT::IDTYPE::L, t));
+				}
 				else
 				{
 					int vint;
@@ -141,13 +169,16 @@ namespace Lex
 					areaOfVisibility.pop();
 					isNotGlobal--;
 					break;
-				case LEX_INTEGER:
+				case LEX_DIG:
 					idDataType = IT::IDDATATYPE::INT;
 					break;
 				case LEX_STRING:
 					idDataType = IT::IDDATATYPE::STR;
 					break;
-				case LEX_DECLARE:
+				case LEX_BOOL:
+					idDataType = IT::IDDATATYPE::BOOL;
+					break;
+				case LEX_NEW:
 					idType = IT::IDTYPE::V;
 					isDeclare = true;
 					break;

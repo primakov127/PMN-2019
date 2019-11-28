@@ -138,6 +138,9 @@ namespace IT
 			case IDDATATYPE::INT:
 				file << '|' << std::setw(15) << std::left << "Integer";
 				break;
+			case IDDATATYPE::BOOL:
+				file << '|' << std::setw(15) << std::left << "Bool";
+				break;
 			case IDDATATYPE::NON:
 				file << '|' << std::setw(15) << std::left << "NuN";
 				break;

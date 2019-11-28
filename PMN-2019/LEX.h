@@ -2,12 +2,13 @@
 #include "pch.h"
 using namespace std;
 
-namespace Lex
+namespace Lexer
 {
 	struct LEX
 	{
 		IT::IdTable idtable;
 		LT::LexTable lextable;
+		LEX();
 		LEX(int lexTableSize, int idTableSize);
 	};
 

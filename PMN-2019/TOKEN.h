@@ -9,6 +9,7 @@ namespace TOKEN
 	struct Token
 	{
 		char token[258];
+		int length;
 		int line;
 		int linePosition;
 	};
@@ -22,7 +23,7 @@ namespace TOKEN
 	};
 
 	TokenTable CreateTokenTable(int size);
-	void addToken(TokenTable& tokens, char* token, int line, int linePosition);
+	void addToken(TokenTable& tokens, char* token, int line, int linePosition, int length);
 	TokenTable tokenize(In::IN in);
 	bool isSeparator(char ch);
 	char* sepToken(char sep);

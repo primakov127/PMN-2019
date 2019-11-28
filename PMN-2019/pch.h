@@ -34,8 +34,13 @@
 #include "FST.h"
 // Графы для КА
 #include "Graphs.h"
-// лексический анализатор
+// Лексический анализатор
 #include "LEX.h"
+// Грамматика Грейбах
+#include "Greibach.h"
+// Реализация КА с магазинной памятью
+#include "MFST.h"
+
 
 // польская запись
 //#include "PolishNotation.h"

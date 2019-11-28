@@ -5,21 +5,23 @@
 #define LT_MAXSIZE 4096                 // максимальное количество строк в таблице лексем
 #define LT_TI_NULLTDX 0xffffffff        // нет элемента таблицы индентификаторов
 
-#define LEX_INTEGER     't'             // лексема для integer
+#define LEX_DIG		    'd'             // лексема для dig
 #define LEX_STRING      's'             // лексема для string
+#define LEX_BOOL		'b'				// лексема для bool
 #define LEX_ID          'i'             // лексема для идентификатора
 #define LEX_LITERAL     'l'             // лексема для литерала
 #define LEX_IF			'q'				// лексема для if
-#define LEX_THEN		'1'				// лексема для then
 #define LEX_ELSE		'2'				// лексема для else
 #define LEX_WHILE		'w'				// лексема для while
 #define LEX_FUNCTION    'f'             // лексема для function
-#define LEX_DECLARE     'd'             // лексема для declare
+#define LEX_NEW		    'n'             // лексема для new
 #define LEX_RETURN      'r'             // лексема для return
 #define LEX_OUT			'o'             // лексема для out
 #define LEX_MAIN		'm'				// лексема для main
 #define LEX_POW			'p'				// лексема для встроенной ф-ции pow()
 #define LEX_ABS			'a'				// лексема для встроенной ф-ции abs()
+#define LEX_LESS		'<'				// лексема для <
+#define LEX_GREAT		'>'				// лексема для >
 #define LEX_SEMICOLON   ';'             // лексема для ;
 #define LEX_COMMA       ','             // лексема для ,
 #define LEX_LEFTBRACE   '{'             // лексема для {

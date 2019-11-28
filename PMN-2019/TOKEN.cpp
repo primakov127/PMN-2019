@@ -6,6 +6,7 @@ namespace TOKEN
 	{
 		TokenTable tokens = CreateTokenTable(TOKEN_MAXSIZE);
 		char buffer[258];
+		bool isNegativeDig = false;
 		int NumOfCharRecorded = 0;
 		int CurrentLine = 0;
 		int LinePosition = 0;
@@ -18,11 +19,15 @@ namespace TOKEN
 
 			if (isSeparator(in.text[CharPointer]))
 			{
+				if (in.text[CharPointer] == ' ' && isNegativeDig)
+					continue;
+
 				if (NumOfCharRecorded)
 				{
 					buffer[NumOfCharRecorded] = IN_CODE_ENDL;
-					addToken(tokens, buffer, CurrentLine, LinePosition - NumOfCharRecorded);
+					addToken(tokens, buffer, CurrentLine, LinePosition - NumOfCharRecorded, NumOfCharRecorded);
 					NumOfCharRecorded = 0;
+					isNegativeDig = false;
 				}
 
 				if (in.text[CharPointer] == '\n')
@@ -32,14 +37,30 @@ namespace TOKEN
 					continue;
 				}
 
+				if (in.text[CharPointer] == '-')
+				{
+					if (!isdigit(tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length]) ||
+						!isalpha(tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length]) ||
+						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length] != ')'	||
+						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length] != '=')
+					{
+						isNegativeDig = true;
+						buffer[NumOfCharRecorded] = in.text[CharPointer];
+						NumOfCharRecorded++;
+						LinePosition++;
+						continue;
+					}
+
+				}
+
 				if (in.text[CharPointer] != ' ' && in.text[CharPointer] != '\t' && in.text[CharPointer] != '\n')
-					addToken(tokens, sepToken(in.text[CharPointer]), CurrentLine, LinePosition - NumOfCharRecorded);
+					addToken(tokens, sepToken(in.text[CharPointer]), CurrentLine, LinePosition - NumOfCharRecorded, 1);
 
 				LinePosition++;
 				continue;
 			}
 
-			if (in.text[CharPointer] == '\'')
+			if (in.text[CharPointer] == '\"')
 			{
 				if (NumOfCharRecorded)
 					throw ERROR_THROW_IN(132, CurrentLine, LinePosition);
@@ -56,12 +77,12 @@ namespace TOKEN
 					CharPointer++;
 					NumOfCharRecorded++;
 					LinePosition++;
-				} while (in.text[CharPointer] != '\'');
+				} while (in.text[CharPointer] != '\"');
 				buffer[NumOfCharRecorded] = in.text[CharPointer];
 				NumOfCharRecorded++;
 				
 				buffer[NumOfCharRecorded] = IN_CODE_ENDL;
-				addToken(tokens, buffer, CurrentLine, LinePosition - NumOfCharRecorded);
+				addToken(tokens, buffer, CurrentLine, LinePosition - NumOfCharRecorded, NumOfCharRecorded);
 				NumOfCharRecorded = 0;
 
 				continue;
@@ -112,7 +133,7 @@ namespace TOKEN
 		return tokentable;
 	}
 
-	void addToken(TokenTable& tokens, char* token, int line, int linePosition)
+	void addToken(TokenTable& tokens, char* token, int line, int linePosition, int length)
 	{
 		if (tokens.size > tokens.maxsize)
 			throw ERROR_THROW(131);
@@ -121,6 +142,7 @@ namespace TOKEN
 		strcpy(item.token, token);
 		item.line = line;
 		item.linePosition = linePosition;
+		item.length = length;
 
 		tokens.table[tokens.size] = item;
 		tokens.size++;

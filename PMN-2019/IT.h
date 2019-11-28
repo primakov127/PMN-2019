@@ -9,7 +9,7 @@
 namespace IT                                    // Таблица идентификаторов
 {
 	enum IDDATATYPE 
-	{ NON = 0, INT = 1, STR = 2 };					// типы данных идентификаторов: integer, string 
+	{ NON = 0, INT = 1, STR = 2, BOOL = 3 };					// типы данных идентификаторов: integer, string 
 
 	enum IDTYPE 
 	{ 

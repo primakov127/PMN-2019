@@ -24,20 +24,19 @@ int _tmain(int argc, _TCHAR ** argv)
 		Log::WriteIn(log, in);
 		TOKEN::TokenTable tokentable = TOKEN::tokenize(in);
 		TOKEN::SaveTokenTableInFile(tokentable, parm.tkn);
-		Lex::LEX lex = Lex::fillingInTables(tokentable);
+		Lexer::LEX lex = Lexer::fillingInTables(tokentable);
 		LT::showTable(lex.lextable, parm.lex);
 		IT::showTable(lex.idtable, parm.out);
-	//	LEX::LexAnal(parm.in, parm.out, lex.lextable, lex.idtable);
 
 	//	//polishNotation(62, lextable, idtable);
 	//	//polishNotation(17, lextable, idtable);
 
 
-	//	MFST_TRACE_START
-	//		MFST::Mfst mfst(lex, GRB::getGreibach());
-	//	mfst.start();
-	//	mfst.savededucation();
-	//	mfst.printrules();
+		MFST_TRACE_START
+			MFST::Mfst mfst(lex, GRB::getGreibach());
+		mfst.start();
+		mfst.savededucation();
+		mfst.printrules();
 
 
 	//	// 17
