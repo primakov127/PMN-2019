@@ -8,37 +8,36 @@ int _tmain(int argc, _TCHAR ** argv)
 {
 	setlocale(LC_ALL, "rus");
 	Log::LOG log = Log::INITLOG;
-	//LT::LexTable lextable = LT::Create(LT_MAXSIZE);
-	//IT::IdTable idtable = IT::Create(TI_MAXSIZE);
-	//LEX::LEX lex;
-	//lex.lextable = lextable;
-	//lex.idtable = idtable;
 	try
 	{
 		Parm::PARM parm = Parm::getparm(argc, argv);
 		log = Log::getlog(parm.log);
-		//Log::WriteLine(log, L"Тест", L" Без ошибок", L"");
 		Log::WriteLog(log);
 		Log::WriteParm(log, parm);
+
 		In::IN in = In::getin(parm.in, parm.out);
 		Log::WriteIn(log, in);
+
+		// Разбиение на слова(ТОКЕНЫ)
 		TOKEN::TokenTable tokentable = TOKEN::tokenize(in);
 		TOKEN::SaveTokenTableInFile(tokentable, parm.tkn);
+
+		// Лексический анализ
 		Lexer::LEX lex = Lexer::fillingInTables(tokentable);
 		LT::showTable(lex.lextable, parm.lex);
 		IT::showTable(lex.idtable, parm.out);
 
-	//	//polishNotation(62, lextable, idtable);
-	//	//polishNotation(17, lextable, idtable);
-
-
-		MFST_TRACE_START
+		// Синтаксический анализ
+		log = Log::getlog(parm.sin);
+		MFST_TRACE_START(log)
 			MFST::Mfst mfst(lex, GRB::getGreibach());
-		mfst.start();
+		mfst.start(log);
 		mfst.savededucation();
-		mfst.printrules();
+		mfst.printrules(log);
 
-
+		CallPolishNotation(lex.lextable, lex.idtable);
+		//LT::showTable(lex.lextable, parm.lex);
+		//IT::showTable(lex.idtable, parm.out);
 	//	// 17
 	//	// 62
 	//	// 130

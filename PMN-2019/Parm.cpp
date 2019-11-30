@@ -21,6 +21,8 @@ namespace Parm
 				wcscpy_s(Input.tkn, argv[i] + wcslen(PARM_TKN));
 			else if (wcsstr(argv[i], PARM_LEX))
 				wcscpy_s(Input.lex, argv[i] + wcslen(PARM_LEX));
+			else if (wcsstr(argv[i], PARM_SIN))
+				wcscpy_s(Input.sin, argv[i] + wcslen(PARM_SIN));
 		}
 		if (wcslen(Input.in) == 0)
 			throw ERROR_THROW(100);
@@ -43,6 +45,11 @@ namespace Parm
 		{
 			wcscpy_s(Input.lex, Input.in);
 			wcsncat_s(Input.lex, PARM_LEX_DEFAULT_EXT, wcslen(PARM_LEX_DEFAULT_EXT));
+		}
+		if (wcslen(Input.sin) == 0)
+		{
+			wcscpy_s(Input.sin, Input.in);
+			wcsncat_s(Input.sin, PARM_SIN_DEFAULT_EXT, wcslen(PARM_SIN_DEFAULT_EXT));
 		}
 		return Input;
 	}

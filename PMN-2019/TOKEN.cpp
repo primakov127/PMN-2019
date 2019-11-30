@@ -17,6 +17,13 @@ namespace TOKEN
 			if (NumOfCharRecorded == 256)
 				throw ERROR_THROW_IN(137, CurrentLine, LinePosition - NumOfCharRecorded);
 
+			if (in.text[CharPointer] == '/' && in.text[CharPointer + 1] == '/')
+			{
+				while (in.text[CharPointer + 1] != '\n')
+					CharPointer++;
+				continue;
+			}
+
 			if (isSeparator(in.text[CharPointer]))
 			{
 				if (in.text[CharPointer] == ' ' && isNegativeDig)
@@ -30,6 +37,28 @@ namespace TOKEN
 					isNegativeDig = false;
 				}
 
+				if (in.text[CharPointer] == '!' && in.text[CharPointer + 1] == '=')
+				{
+					buffer[0] = '!';
+					buffer[1] = '=';
+					buffer[2] = IN_CODE_ENDL;
+					addToken(tokens, buffer, CurrentLine, LinePosition - NumOfCharRecorded, 2);
+					CharPointer++;
+
+					continue;
+				}
+
+				if (in.text[CharPointer] == '=' && in.text[CharPointer + 1] == '=')
+				{
+					buffer[0] = '=';
+					buffer[1] = '=';
+					buffer[2] = IN_CODE_ENDL;
+					addToken(tokens, buffer, CurrentLine, LinePosition - NumOfCharRecorded, 2);
+					CharPointer++;
+
+					continue;
+				}
+
 				if (in.text[CharPointer] == '\n')
 				{
 					CurrentLine++;
@@ -39,10 +68,10 @@ namespace TOKEN
 
 				if (in.text[CharPointer] == '-')
 				{
-					if (!isdigit(tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length]) ||
-						!isalpha(tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length]) ||
-						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length] != ')'	||
-						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length] != '=')
+					if (!isdigit(tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1]) &&
+						!isalpha(tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1]) &&
+						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1] != ')'	&&
+						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1] == '=')
 					{
 						isNegativeDig = true;
 						buffer[NumOfCharRecorded] = in.text[CharPointer];

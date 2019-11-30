@@ -15,4 +15,5 @@ namespace Lexer
 	char lexType(TOKEN::Token token);
 	LEX fillingInTables(TOKEN::TokenTable tokenTable);
 	int searchID(stack<int> areaOfVisibility, string id, IT::IdTable& idtable);
+	int globalSearchFunctionID(int globalAreaOfVisibility, string id, IT::IdTable& idtable);
 }

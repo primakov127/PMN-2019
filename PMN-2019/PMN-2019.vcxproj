@@ -160,6 +160,7 @@
     <ClInclude Include="LEX.h" />
     <ClInclude Include="LT.h" />
     <ClInclude Include="MFST.h" />
+    <ClInclude Include="Polish.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="TOKEN.h" />
     <ClInclude Include="Log.h" />
@@ -175,6 +176,7 @@
     <ClCompile Include="LEX.cpp" />
     <ClCompile Include="LT.cpp" />
     <ClCompile Include="MFST.cpp" />
+    <ClCompile Include="Polish.cpp" />
     <ClCompile Include="TOKEN.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Parm.cpp" />
@@ -189,6 +191,7 @@
   <ItemGroup>
     <None Include="..\Debug\in.txt.lex" />
     <None Include="..\Debug\in.txt.out" />
+    <None Include="..\Debug\in.txt.sin" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Debug\in.txt" />

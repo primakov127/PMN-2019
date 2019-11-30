@@ -1,6 +1,6 @@
 #pragma once
 #include "pch.h"
-#define TOKEN_SEPARATORS " \t\n+-*/%=(){},;"
+#define TOKEN_SEPARATORS " \t\n+-*/%=<>(){},;!"
 #define TOKEN_MAXSIZE 4096
 
 namespace TOKEN

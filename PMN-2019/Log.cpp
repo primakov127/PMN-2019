@@ -26,7 +26,7 @@ namespace Log
 			*log.stream << *ptr;
 			++ptr;
 		}
-		*log.stream << std::endl;
+		//*log.stream << std::endl;
 	}
 
 	void WriteLine(LOG log, const wchar_t * c, ...)

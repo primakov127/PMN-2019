@@ -28,15 +28,14 @@
 #define LEX_RIGHTBRACE  '}'             // лексема для }
 #define LEX_LEFTHESIS   '('             // лексема для (
 #define LEX_RIGHTHESIS  ')'             // лексема для )
-#define	LEX_OPERATOR	'v'				// лексема для операторов
 #define LEX_PLUS        '+'             // лексема для +
 #define LEX_MINUS       '-'             // лексема для -
 #define LEX_STAR        '*'             // лексема для *
 #define LEX_DIRSLASH    '/'             // лексема для /
 #define LEX_REMDIV		'%'				// лексема для %
 #define LEX_EQUAL		'='				// лексема для =
-#define LEX_LEFTRVK		'['				// лексема для [
-#define LEX_RIGHTRVK	']'				// лексема для ]
+#define LEX_EQUALEQUAL	'&'				// лексема для ==
+#define LEX_NOTEQUAL	'!'				// лексема для !=
 
 namespace LT                            // таблица лексем
 {

@@ -17,6 +17,18 @@ struct GRAPH
 	FST::NODE(1,FST::RELATION('=', 1)), \
 	FST::NODE()
 
+#define GRAPH_EQUALSEQUALS \
+	3, \
+	FST::NODE(1,FST::RELATION('=', 1)), \
+	FST::NODE(1,FST::RELATION('=', 2)), \
+	FST::NODE()
+
+#define GRAPH_NOTEQUALS \
+	3, \
+	FST::NODE(1,FST::RELATION('!', 1)), \
+	FST::NODE(1,FST::RELATION('=', 2)), \
+	FST::NODE()
+
 #define GRAPH_COMMA \
 	2, \
 	FST::NODE(1,FST::RELATION(',', 1)), \
@@ -30,16 +42,6 @@ struct GRAPH
 #define GRAPH_RIGHTBRACE_CLOSE \
 	2, \
 	FST::NODE(1,FST::RELATION('}', 1)), \
-	FST::NODE()
-
-#define GRAPH_LEFTRVK_OPEN \
-	2, \
-	FST::NODE(1,FST::RELATION('[', 1)), \
-	FST::NODE()
-
-#define GRAPH_RIGHTRVK_CLOSE \
-	2, \
-	FST::NODE(1,FST::RELATION(']', 1)), \
 	FST::NODE()
 
 #define GRAPH_LEFTHESIS_OPEN \
@@ -312,7 +314,7 @@ struct GRAPH
 	FST::NODE()
 
 #define GRAPH_WHILE \
-	5, \
+	6, \
 	FST::NODE(1,FST::RELATION('w', 1)), \
 	FST::NODE(1,FST::RELATION('h', 2)), \
 	FST::NODE(1,FST::RELATION('i', 3)), \

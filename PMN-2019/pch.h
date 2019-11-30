@@ -40,7 +40,7 @@
 #include "Greibach.h"
 // Реализация КА с магазинной памятью
 #include "MFST.h"
-
+#include "Polish.h"
 
 // польская запись
 //#include "PolishNotation.h"
