@@ -61,11 +61,13 @@ namespace Error
 		ERROR_ENTRY_NODEF10(160),ERROR_ENTRY_NODEF10(170),ERROR_ENTRY_NODEF10(180),ERROR_ENTRY_NODEF10(190),
 		ERROR_ENTRY_NODEF100(200),ERROR_ENTRY_NODEF100(300),ERROR_ENTRY_NODEF100(400),ERROR_ENTRY_NODEF100(500),
 		ERROR_ENTRY(600, "Íåâåğíàÿ ñòğóêòóğà ïğîãğàììû"),
-		ERROR_ENTRY(601, "Îøèáî÷íûé îïåğàòîğ"),
+		ERROR_ENTRY(601, "Îøèáêà â êîíñòğóêöèè ôóíêöèè"),
 		ERROR_ENTRY(602, "Îøèáêà â âûğàæåíèè"),
 		ERROR_ENTRY(603, "Îøèáêà â ïàğàìåòğàõ ôóíêöèè"),
 		ERROR_ENTRY(604, "Îøèáêà â ïàğàìåòğàõ âûçûâàåìîé ôóíêöèè"),
-		ERROR_ENTRY_NODEF(605), ERROR_ENTRY_NODEF(606), ERROR_ENTRY_NODEF(607), ERROR_ENTRY_NODEF(609),
+		ERROR_ENTRY(605, "Îøèáî÷íûé îïåğàòîğ"),
+		ERROR_ENTRY(606, "Îøèáî÷íûé óñëîâíûé îïåğàòîğ"),
+		ERROR_ENTRY_NODEF(607), ERROR_ENTRY_NODEF(609),
 		ERROR_ENTRY_NODEF10(610), ERROR_ENTRY_NODEF10(620), ERROR_ENTRY_NODEF10(630), ERROR_ENTRY_NODEF10(640),
 		ERROR_ENTRY_NODEF10(660), ERROR_ENTRY_NODEF10(670), ERROR_ENTRY_NODEF10(680), ERROR_ENTRY_NODEF10(690),
 		ERROR_ENTRY_NODEF100(700),ERROR_ENTRY_NODEF100(800),ERROR_ENTRY_NODEF100(900),
@@ -92,7 +94,7 @@ namespace Error
 	ERROR geterrorin(int id, int line, int col)
 	{
 		ERROR error_info;
-		if (id > 0 && id < ERROR_MAXSIZE_MESSAGE)
+		if (id > 0 && id < ERROR_MAX_ENTRY)
 		{
 			error_info.id = errors[id].id;
 			error_info.inext.col = col + 1;

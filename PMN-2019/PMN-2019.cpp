@@ -24,8 +24,8 @@ int _tmain(int argc, _TCHAR ** argv)
 
 		// Лексический анализ
 		Lexer::LEX lex = Lexer::fillingInTables(tokentable);
-		LT::showTable(lex.lextable, parm.lex);
-		IT::showTable(lex.idtable, parm.out);
+		/*LT::showTable(lex.lextable, parm.lex);
+		IT::showTable(lex.idtable, parm.out);*/
 
 		// Синтаксический анализ
 		log = Log::getlog(parm.sin);
@@ -36,8 +36,8 @@ int _tmain(int argc, _TCHAR ** argv)
 		mfst.printrules(log);
 
 		CallPolishNotation(lex.lextable, lex.idtable);
-		//LT::showTable(lex.lextable, parm.lex);
-		//IT::showTable(lex.idtable, parm.out);
+		LT::showTable(lex.lextable, parm.lex);
+		IT::showTable(lex.idtable, parm.out);
 	//	// 17
 	//	// 62
 	//	// 130

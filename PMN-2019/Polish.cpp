@@ -29,6 +29,7 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 {
 	queue<LT::Entry> X;
 	stack<LT::Entry> Y;
+	LT::Entry forbidden = {'#', LT_TI_NULLTDX, LT_TI_NULLTDX};
 	int count = 0;
 	bool checker = false;
 	int curLine = 0;
@@ -78,12 +79,6 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 				Y.pop();
 			}
 			Y.pop();	// Удаляем (
-			//if (Y.top().lexema == 'p' || Y.top().lexema == 'a' || idtable.table[Y.top().idxTI].idType == IT::IDTYPE::F)
-			//{
-			//	X.push(Y.top());
-			//	//Y.pop();
-			//}
-
 			continue;
 		}
 		case LEX_PLUS:
@@ -159,7 +154,7 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 			}
 			continue;
 		default:
-			break;
+			continue;
 		}
 	}
 	while (!Y.empty())
@@ -168,12 +163,56 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 		Y.pop();
 	}
 
-	while (!X.empty())
+	for (int i = 0; i < countOfLex; i++)
+	{
+		if (!X.empty())
+		{
+			switch (X.front().lexema)
+			{
+			case LEX_ID:
+				if (posOfFirstLex <= idtable.table[X.front().idxTI].idxfirstLE < posOfFirstLex + countOfLex)		// Проверка является ли эта лексема первым вхождение в LT
+				{
+					lextable.table[posOfFirstLex + i] = X.front();
+					idtable.table[X.front().idxTI].idxfirstLE = posOfFirstLex + i;									// Меняем индекс первого вхождения
+					X.pop();
+				}
+				else
+				{
+					lextable.table[posOfFirstLex + i] = X.front();
+					X.pop();
+				}
+				continue;
+			case LEX_LITERAL:
+				lextable.table[posOfFirstLex + i] = X.front();
+				idtable.table[X.front().idxTI].idxfirstLE = posOfFirstLex + i;										// Меняем индекс первого вхождения
+				X.pop();
+				continue;
+			case LEX_POW:
+				lextable.table[posOfFirstLex + i] = X.front();
+				X.pop();
+				continue;
+			case LEX_ABS:
+				lextable.table[posOfFirstLex + i] = X.front();
+				X.pop();
+				continue;
+			default:
+				lextable.table[posOfFirstLex + i] = X.front();
+				X.pop();
+				continue;
+			}
+		}
+		else
+		{
+			lextable.table[posOfFirstLex + i] = forbidden;
+		}
+	}
+
+	/*while (!X.empty())
 	{
 		cout << X.front().lexema;
 		X.pop();
 	}
-	cout << endl;
+	cout << endl;*/
 	
 }
 

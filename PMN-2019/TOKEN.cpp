@@ -70,8 +70,7 @@ namespace TOKEN
 				{
 					if (!isdigit(tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1]) &&
 						!isalpha(tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1]) &&
-						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1] != ')'	&&
-						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1] == '=')
+						tokens.table[tokens.size - 1].token[tokens.table[tokens.size - 1].length - 1] != ')')
 					{
 						isNegativeDig = true;
 						buffer[NumOfCharRecorded] = in.text[CharPointer];
