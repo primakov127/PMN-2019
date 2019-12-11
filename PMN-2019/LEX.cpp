@@ -89,6 +89,7 @@ namespace Lexer
 		bool isMain = false;								// Есть ли ф-ция main
 		int numOfLit = 0;
 		bool isDeclare = false;
+		bool GlobalFunIsFound = false;
 
 		for (int index = 0; index < tokenTable.size; index++)
 		{
@@ -97,7 +98,11 @@ namespace Lexer
 			case LEX_ID:
 				lineIT = searchID(areaOfVisibility, string(tokenTable.table[index].token), lex.idtable);			// Поиск в IT
 				if (lineIT == TI_NULLIDX)
+				{
 					lineIT = globalSearchFunctionID(globalAreaOfVisibility, string(tokenTable.table[index].token), lex.idtable);	// Поиск глобальных ф-ций
+					if (lineIT != TI_NULLIDX)
+						GlobalFunIsFound = true;
+				}
 				if (lineIT == TI_NULLIDX && isDeclare || lineIT == TI_NULLIDX && !isNotGlobal)			// Добавить в IT, если не было найдено и это объявление
 				{																						// или если не было найдено и это глобальное объявление
 					lineIT = lex.idtable.size;
@@ -110,7 +115,9 @@ namespace Lexer
 				}
 				else if (lineIT != TI_NULLIDX && isDeclare)												// Если было найдено и это объявление, то проверка
 				{																						// на повторное объявление в одном блоке
-					if ((IT::GetEntry(lex.idtable, lineIT)).id == string(tokenTable.table[index].token) + to_string(areaOfVisibility.top()))
+					if ((IT::GetEntry(lex.idtable, lineIT)).id == string(tokenTable.table[index].token) + to_string(areaOfVisibility.top()) || GlobalFunIsFound
+						|| (IT::GetEntry(lex.idtable, lineIT)).id == string(tokenTable.table[index].token) + to_string(globalAreaOfVisibility) && ((IT::GetEntry(lex.idtable, lineIT)).idType == IT::IDTYPE::F) 
+						|| (IT::GetEntry(lex.idtable, lineIT)).id == string(tokenTable.table[index].token) + to_string(globalAreaOfVisibility) && ((IT::GetEntry(lex.idtable, lineIT)).idType == IT::IDTYPE::P) && (isNotGlobal == 1))
 					{
 						throw ERROR_THROW_IN(141, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 					}
@@ -121,12 +128,15 @@ namespace Lexer
 						IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, idDataType, idType));
 					}
 				}
+				else if (lineIT != TI_NULLIDX && idType == IT::IDTYPE::F)
+					throw ERROR_THROW_IN(149, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 					
 				// Проверка повторного объявления
 
 				LT::Add(lex.lextable, LT::createEntry(lexema, tokenTable.table[index].line, lineIT));
 				idType = IT::IDTYPE::P;
 				idDataType = IT::IDDATATYPE::NON;
+				GlobalFunIsFound = false;
 				break;
 			case LEX_LITERAL:
 				if (tokenTable.table[index].token[0] == '\"')
@@ -209,15 +219,20 @@ namespace Lexer
 						globalAreaOfVisibility++;
 						if (areaOfVisibility.top() != 0)
 							areaOfVisibility.pop();
+						areaOfVisibility.push(globalAreaOfVisibility);
 					}
-					
-
-					areaOfVisibility.push(globalAreaOfVisibility);
 					break;
 				case LEX_MAIN:
 					if (isMain)
 						throw ERROR_THROW_IN(136, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 					isMain = true;
+					if (!isNotGlobal)
+					{
+						globalAreaOfVisibility++;
+						if (areaOfVisibility.top() != 0)
+							areaOfVisibility.pop();
+						areaOfVisibility.push(globalAreaOfVisibility);
+					}
 					break;
 				case LEX_SEMICOLON:
 					isDeclare = false;
@@ -247,6 +262,7 @@ namespace Lexer
 			result = IT::IsId(idtable, searchingID);
 			if (result != TI_NULLIDX)
 				return result;
+			
 		}
 		return result;
 	}
@@ -255,13 +271,13 @@ namespace Lexer
 	{
 		int result = TI_NULLIDX;
 		string searchingID;
-		for (int i = 1; i <= globalAreaOfVisibility; i++)
+		for (int i = 1; i < globalAreaOfVisibility; i++)
 		{
 			searchingID = id + to_string(i);
 			result = IT::IsId(idtable, searchingID);
 			if (result != TI_NULLIDX && idtable.table[result].idType == IT::IDTYPE::F)
 				return result;
 		}
-		return result;
+		return TI_NULLIDX;
 	}
 }

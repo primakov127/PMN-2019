@@ -35,9 +35,14 @@ int _tmain(int argc, _TCHAR ** argv)
 		mfst.savededucation();
 		mfst.printrules(log);
 
+		log = Log::getlog(parm.log);
+		//CheckFunParam(lex.lextable, lex.idtable);
+		CallSemantic(lex.lextable, lex.idtable);
 		CallPolishNotation(lex.lextable, lex.idtable);
+
 		LT::showTable(lex.lextable, parm.lex);
 		IT::showTable(lex.idtable, parm.out);
+		//CheckFunParam(lex.lextable, lex.idtable);
 	//	// 17
 	//	// 62
 	//	// 130

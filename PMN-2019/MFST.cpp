@@ -171,8 +171,8 @@ namespace MFST
 		case NS_NORULE:			MFST_TRACE4("------>NS_NURULE", log)
 			std::cout << "--------------------------------------------------------------------------" << std::endl;
 			std::cout << getDiagnosis(0, buf) << std::endl;
-			std::cout << getDiagnosis(1, buf) << std::endl;
-			std::cout << getDiagnosis(2, buf) << std::endl;
+			//std::cout << getDiagnosis(1, buf) << std::endl;
+			//std::cout << getDiagnosis(2, buf) << std::endl;
 			break;
 		case NS_NORULECHAIN:	MFST_TRACE4("------>NS_NURULENORULECHAIN", log) break;
 		case NS_ERROR:			MFST_TRACE4("------>NS_ERROR", log) break;

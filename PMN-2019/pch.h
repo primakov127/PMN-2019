@@ -41,6 +41,7 @@
 // Реализация КА с магазинной памятью
 #include "MFST.h"
 #include "Polish.h"
+#include "Semantic.h"
 
 // польская запись
 //#include "PolishNotation.h"

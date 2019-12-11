@@ -18,7 +18,7 @@ void CallPolishNotation(LT::LexTable& lextable, IT::IdTable& idtable)
 {
 	for (int i = 0; i < lextable.size; i++)
 	{
-		if (lextable.table[i].lexema == LEX_EQUAL)
+		if (lextable.table[i].lexema == LEX_EQUAL && idtable.table[lextable.table[i - 1].idxTI].idDataType != IT::IDDATATYPE::BOOL)
 		{
 			polishNotation(++i, lextable, idtable);
 		}
@@ -170,7 +170,7 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 			switch (X.front().lexema)
 			{
 			case LEX_ID:
-				if (posOfFirstLex <= idtable.table[X.front().idxTI].idxfirstLE < posOfFirstLex + countOfLex)		// Проверка является ли эта лексема первым вхождение в LT
+				if (posOfFirstLex <= idtable.table[X.front().idxTI].idxfirstLE && idtable.table[X.front().idxTI].idxfirstLE < posOfFirstLex + countOfLex)		// Проверка является ли эта лексема первым вхождение в LT
 				{
 					lextable.table[posOfFirstLex + i] = X.front();
 					idtable.table[X.front().idxTI].idxfirstLE = posOfFirstLex + i;									// Меняем индекс первого вхождения

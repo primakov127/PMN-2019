@@ -53,11 +53,20 @@ namespace Error
 		ERROR_ENTRY(139, "Íå íàéäåíà òî÷êà âõîäà â ïğîãğàììó (main)"),
 		ERROR_ENTRY(140, "Èäåíòèôèêàòîğ ñ òàêèì èìåíåì íå íàéäåí"),
 		ERROR_ENTRY(141, "Ïîâòîğíîå îáúÿâëåíèå èíäåíòèôèêàòîğà"),
-		ERROR_ENTRY_NODEF(142),
-		ERROR_ENTRY_NODEF(143), ERROR_ENTRY_NODEF(144), ERROR_ENTRY_NODEF(145),
-		ERROR_ENTRY_NODEF(146), ERROR_ENTRY_NODEF(147), ERROR_ENTRY_NODEF(148),
-		ERROR_ENTRY_NODEF(149),
-		ERROR_ENTRY_NODEF10(150),
+		ERROR_ENTRY(142, "Íåñîîòâåòñòâèå êîëè÷åñòâà ïàğàìåòğîâ â âûçûâàåìîé ôóíêöèè"),
+		ERROR_ENTRY(143, "Íåñîîòâåòñòâèå òèïîâ â âûğàæåíèè"),
+		ERROR_ENTRY(144, "Ñëèøêîì ìíîãî ïàğàìåòğîâ â ô-öèè"),
+		ERROR_ENTRY(145, "Ïğåâûøåíî êîëè÷åñòâî ôóíêöèé"),
+		ERROR_ENTRY(146, "Íåñîîòâåòñâèå ïàğàìåòğîââ îáúÿâëåííîé è âûçûâàåìîé ôóíêöèé"),
+		ERROR_ENTRY(147, "Íåñîîòâåòñòâèå ïàğàìåòğîâ âñòğîåííîé ôóíêöèè"),
+		ERROR_ENTRY(148, "Èäåíòèôèêàòîğ íå ÿâëÿåòñÿ ëåâîñòîğîííèì âûğàæåíèåì"),
+		ERROR_ENTRY(149, "Äàííàÿ ôóíêöèÿ óæå èìååò ğåàëèçàöèş"),
+		ERROR_ENTRY(150, "Â âûçîâå ôóíêöèè îòñóòñòâóşò ()"),
+		ERROR_ENTRY(151, "Òèï âîçâğàùàåìîãî çíà÷åíèÿ íå ñîîòâåòñòâóåò òèïó ôóíêöèè"),
+		ERROR_ENTRY_NODEF(152),
+		ERROR_ENTRY_NODEF(153), ERROR_ENTRY_NODEF(154), ERROR_ENTRY_NODEF(155),
+		ERROR_ENTRY_NODEF(156), ERROR_ENTRY_NODEF(157), ERROR_ENTRY_NODEF(158),
+		ERROR_ENTRY_NODEF(159),
 		ERROR_ENTRY_NODEF10(160),ERROR_ENTRY_NODEF10(170),ERROR_ENTRY_NODEF10(180),ERROR_ENTRY_NODEF10(190),
 		ERROR_ENTRY_NODEF100(200),ERROR_ENTRY_NODEF100(300),ERROR_ENTRY_NODEF100(400),ERROR_ENTRY_NODEF100(500),
 		ERROR_ENTRY(600, "Íåâåğíàÿ ñòğóêòóğà ïğîãğàììû"),
@@ -76,7 +85,7 @@ namespace Error
 	ERROR geterror(int id)
 	{
 		ERROR error_info;
-		if (id > 0 && id < ERROR_MAXSIZE_MESSAGE)
+		if (id > 0 && id < ERROR_MAX_ENTRY)
 		{
 			error_info.id = errors[id].id;
 			strcpy(error_info.message, errors[id].message);

@@ -162,6 +162,7 @@
     <ClInclude Include="MFST.h" />
     <ClInclude Include="Polish.h" />
     <ClInclude Include="Rules.h" />
+    <ClInclude Include="Semantic.h" />
     <ClInclude Include="TOKEN.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Parm.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="LT.cpp" />
     <ClCompile Include="MFST.cpp" />
     <ClCompile Include="Polish.cpp" />
+    <ClCompile Include="Semantic.cpp" />
     <ClCompile Include="TOKEN.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Parm.cpp" />
