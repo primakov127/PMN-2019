@@ -3,50 +3,52 @@
 
 namespace CodeGeneration
 {
-	void CodeGeneration(Lexer::LEX lex, Log::LOG log)
+	void CodeGeneration(Lexer::LEX lex, wchar_t outfile[])
 	{
-		*(log.stream) << BEGIN;
-		*(log.stream) << EXTERN;
+		ofstream generation(outfile);
 
-		*(log.stream) << ".CONST\n";
-		*(log.stream) << "\tnull_division BYTE \'ERROR: DIVISION BY ZERO\', 0\n";
+		generation << BEGIN;
+		generation << EXTERN;
+
+		generation << ".CONST\n";
+		generation << "\tnull_division BYTE \'ERROR: DIVISION BY ZERO\', 0\n";
 		for (int i = 0; i < lex.idtable.size; i++)
 		{
 			if (lex.idtable.table[i].idType == IT::L)
 			{
-				*(log.stream) << "\t" << lex.idtable.table[i].id;
+				generation << "\t" << lex.idtable.table[i].id;
 				if (lex.idtable.table[i].idDataType == IT::STR)
 				{
-					*(log.stream) << " BYTE " << lex.idtable.table[i].value.vstr.str << ", 0\n";
+					generation << " BYTE " << lex.idtable.table[i].value.vstr.str << ", 0\n";
 				}
 				else if (lex.idtable.table[i].idDataType == IT::INT)
 				{
-					*(log.stream) << " SDWORD " << lex.idtable.table[i].value.vint << endl;
+					generation << " SDWORD " << lex.idtable.table[i].value.vint << endl;
 				}
 				else
 				{
-					*(log.stream) << " BYTE " << lex.idtable.table[i].value.vint << endl;
+					generation << " BYTE " << lex.idtable.table[i].value.vint << endl;
 				}
 			}
 		}
 
-		*(log.stream) << ".DATA\n";
+		generation << ".DATA\n";
 		for (int i = 0; i < lex.idtable.size; i++)
 		{
 			if (lex.idtable.table[i].idType == IT::IDTYPE::V)
 			{
-				*(log.stream) << "\t" << lex.idtable.table[i].id;
+				generation << "\t" << lex.idtable.table[i].id;
 				if (lex.idtable.table[i].idDataType == IT::BOOL)
 				{
-					*(log.stream) << " BYTE 0\n";
+					generation << " BYTE 0\n";
 				}
 				if (lex.idtable.table[i].idDataType == IT::STR)
 				{
-					*(log.stream) << " DWORD ?\n";
+					generation << " DWORD ?\n";
 				}
 				if (lex.idtable.table[i].idDataType == IT::INT)
 				{
-					*(log.stream) << " SDWORD 0\n";
+					generation << " SDWORD 0\n";
 				}
 			}
 		}
@@ -63,7 +65,7 @@ namespace CodeGeneration
 			flag_if = false,					// внутри if?
 			flag_then = false,					// внутри then?
 			flag_else = false;					// внутри then/else?
-		*(log.stream) << "\n.CODE\n\n";
+		generation << "\n.CODE\n\n";
 
 		for (int i = 0; i < lex.lextable.size; i++)
 		{
@@ -71,39 +73,39 @@ namespace CodeGeneration
 			{
 				case LEX_FUNCTION:
 				{
-					*(log.stream) << (func_name = lex.idtable.table[lex.lextable.table[++i].idxTI].id) << " PROC ";
+					generation << (func_name = lex.idtable.table[lex.lextable.table[++i].idxTI].id) << " PROC ";
 					while (lex.lextable.table[i].lexema != LEX_RIGHTHESIS)
 					{
 						if (lex.idtable.table[lex.lextable.table[i].idxTI].idType == IT::P)
 						{
-							*(log.stream) << lex.idtable.table[lex.lextable.table[i].idxTI].id << " : ";
+							generation << lex.idtable.table[lex.lextable.table[i].idxTI].id << " : ";
 							if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::INT)
 							{
-								*(log.stream) << "SDWORD";
+								generation << "SDWORD";
 							}
 							else if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::STR)
 							{
-								*(log.stream) << "BYTE";
+								generation << "BYTE";
 							}
 							else
 							{
-								*(log.stream) << "BYTE";
+								generation << "BYTE";
 							}
 						}
 						if (lex.lextable.table[i].lexema == LEX_COMMA)
 						{
-							*(log.stream) << ", ";
+							generation << ", ";
 						}
 						i++;
 					}
 					flag_func = true;
-					*(log.stream) << endl;
+					generation << endl;
 					break;
 				}
 				case LEX_MAIN:
 				{
 					flag_main = true;
-					*(log.stream) << "main PROC\n";
+					generation << "main PROC\n";
 					break;
 				}
 				case LEX_EQUAL:
@@ -115,22 +117,22 @@ namespace CodeGeneration
 						switch (lex.lextable.table[i].lexema)
 						{
 							case LEX_POW:
-								*(log.stream) << "\t\tcall power\n\tpush eax\n";
+								generation << "\t\tcall power\n\tpush eax\n";
 								break;
 							case LEX_ABS:
-								*(log.stream) << "\t\tcall abser\n\tpush eax\n";
+								generation << "\t\tcall abser\n\tpush eax\n";
 								break;
 							case LEX_LITERAL:
 							{
 								if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::IDDATATYPE::INT)
 								{
-									*(log.stream) << "\tpush " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
+									generation << "\tpush " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
 									stk.push(lex.idtable.table[lex.lextable.table[i].idxTI].id);
 									break;
 								}
 								else
 								{
-									*(log.stream) << "\tpush offset " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
+									generation << "\tpush offset " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
 									stk.push("offset" + (string)lex.idtable.table[lex.lextable.table[i].idxTI].id);
 									break;
 								}
@@ -139,48 +141,48 @@ namespace CodeGeneration
 							{
 								if (lex.idtable.table[lex.lextable.table[i].idxTI].idType == IT::IDTYPE::F)
 								{
-									*(log.stream) << "\t\tcall " << lex.idtable.table[lex.lextable.table[i].idxTI].id << "\n\tpush eax\n";
+									generation << "\t\tcall " << lex.idtable.table[lex.lextable.table[i].idxTI].id << "\n\tpush eax\n";
 									break;
 								}
-								*(log.stream) << "\tpush " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
+								generation << "\tpush " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
 								stk.push(lex.idtable.table[lex.lextable.table[i].idxTI].id);
 								break;
 							}
 							case LEX_STAR:
 							{
-								*(log.stream) << "\tpop eax\n\tpop ebx\n";
-								*(log.stream) << "\tmul ebx\n\tpush eax\n";
+								generation << "\tpop eax\n\tpop ebx\n";
+								generation << "\tmul ebx\n\tpush eax\n";
 								break;
 							}
 							case LEX_PLUS:
 							{
-								*(log.stream) << "\tpop eax\n\tpop ebx\n";
-								*(log.stream) << "\tadd eax, ebx\n\tpush eax\n";
+								generation << "\tpop eax\n\tpop ebx\n";
+								generation << "\tadd eax, ebx\n\tpush eax\n";
 								break;
 							}
 							case LEX_MINUS:
 							{
-								*(log.stream) << "\tpop ebx\n\tpop eax\n";
-								*(log.stream) << "\tsub eax, ebx\n\tpush eax\n";
+								generation << "\tpop ebx\n\tpop eax\n";
+								generation << "\tsub eax, ebx\n\tpush eax\n";
 								break;
 							}
 							case LEX_DIRSLASH:
 							{
-								*(log.stream) << "\tpop ebx\n\tpop eax\n";
-								*(log.stream) << "\tcmp ebx,0\n"\
+								generation << "\tpop ebx\n\tpop eax\n";
+								generation << "\tcmp ebx,0\n"\
 									"\tje SOMETHINGWRONG\n";
-								*(log.stream) << "\tcdq\n";
-								*(log.stream) << "\tidiv ebx\n\tpush eax\n";
+								generation << "\tcdq\n";
+								generation << "\tidiv ebx\n\tpush eax\n";
 								break;
 							}
 							case LEX_REMDIV:
 							{
 
-								*(log.stream) << "\tpop ebx\n\tpop eax\n";
-								*(log.stream) << "\tcmp ebx,0\n"\
+								generation << "\tpop ebx\n\tpop eax\n";
+								generation << "\tcmp ebx,0\n"\
 									"\tje SOMETHINGWRONG\n";
-								*(log.stream) << "\tcdq\n";
-								*(log.stream) << "\tidiv ebx\n\tpush edx\n";
+								generation << "\tcdq\n";
+								generation << "\tidiv ebx\n\tpush edx\n";
 								break;
 							}
 							default:
@@ -188,30 +190,30 @@ namespace CodeGeneration
 						}
 						i++;
 					}
-					*(log.stream) << "\tpop " << lex.idtable.table[lex.lextable.table[result_position].idxTI].id << "\n";
-					*(log.stream) << endl;
+					generation << "\tpop " << lex.idtable.table[lex.lextable.table[result_position].idxTI].id << "\n";
+					generation << endl;
 					break;
 				}
 				case LEX_RETURN:
 				{
-					*(log.stream) << "\tpush ";
+					generation << "\tpush ";
 					i++;
 					if (lex.idtable.table[lex.lextable.table[i].idxTI].idType == IT::L)
 					{
-						*(log.stream) << lex.idtable.table[lex.lextable.table[i++].idxTI].value.vint << endl;
+						generation << lex.idtable.table[lex.lextable.table[i++].idxTI].value.vint << endl;
 					}
 					else
 					{
-						*(log.stream) << lex.idtable.table[lex.lextable.table[i++].idxTI].id << endl;
+						generation << lex.idtable.table[lex.lextable.table[i++].idxTI].id << endl;
 					}
 					if (flag_func)
 					{
-						*(log.stream) << "\t\tjmp local" << num_of_ret << endl;
+						generation << "\t\tjmp local" << num_of_ret << endl;
 						flag_return = true;
 					}
 					if (flag_main)
 					{
-						*(log.stream) << "\t\tjmp theend\n";
+						generation << "\t\tjmp theend\n";
 						flag_return = true;
 					}
 					break;
@@ -222,20 +224,20 @@ namespace CodeGeneration
 					{
 						if (flag_return)
 						{
-							*(log.stream) << "theend:\n";
+							generation << "theend:\n";
 							flag_return = false;
 						}
-						*(log.stream) << END;
+						generation << END;
 					}
 					if (flag_func)
 					{
 						if (flag_return)
 						{
-							*(log.stream) << "local" << num_of_ret++ << ":\n";
-							*(log.stream) << "\tpop eax\n\tret\n";
+							generation << "local" << num_of_ret++ << ":\n";
+							generation << "\tpop eax\n\tret\n";
 							flag_return = false;
 						}
-						*(log.stream) << func_name << " ENDP\n\n";
+						generation << func_name << " ENDP\n\n";
 						flag_func = false;
 					}
 					if (flag_then)
@@ -243,22 +245,22 @@ namespace CodeGeneration
 						flag_then = false;
 						if (flag_else)
 						{
-							*(log.stream) << "\tjmp e" << num_of_ends << endl;
+							generation << "\tjmp e" << num_of_ends << endl;
 							flag_else = false;
 						}
-						*(log.stream) << "m" << num_of_points++ << ":\n";
+						generation << "m" << num_of_points++ << ":\n";
 					}
 					if (flag_else)
 					{
 						flag_else = false;
-						*(log.stream) << "e" << num_of_ends++ << ":\n";
+						generation << "e" << num_of_ends++ << ":\n";
 					}
 					break;
 				}
 				case LEX_LEFTBRACE:
 					if (flag_then)
 					{
-						*(log.stream) << "m" << num_of_points++ << ":\n";
+						generation << "m" << num_of_points++ << ":\n";
 					}
 					break;
 				case LEX_IF:
@@ -271,29 +273,29 @@ namespace CodeGeneration
 				{
 					if (flag_if)
 					{
-						*(log.stream) << "\tmov eax, " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << endl;
-						*(log.stream) << "\tcmp eax, " << lex.idtable.table[lex.lextable.table[i + 3].idxTI].id << endl;
+						generation << "\tmov eax, " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << endl;
+						generation << "\tcmp eax, " << lex.idtable.table[lex.lextable.table[i + 3].idxTI].id << endl;
 						if (lex.lextable.table[i + 2].lexema == LEX_GREAT)
 						{
-							*(log.stream) << "\t\tjg m" << num_of_points << endl;
-							*(log.stream) << "\t\tjl m" << num_of_points + 1 << endl;
+							generation << "\t\tjg m" << num_of_points << endl;
+							generation << "\t\tjl m" << num_of_points + 1 << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_LESS)
 						{
-							*(log.stream) << "\t\tjl m" << num_of_points << endl;
-							*(log.stream) << "\t\tjg m" << num_of_points + 1 << endl;
+							generation << "\t\tjl m" << num_of_points << endl;
+							generation << "\t\tjg m" << num_of_points + 1 << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_EQUALEQUAL)
 						{
-							*(log.stream) << "\t\tjz m" << num_of_points << endl;
-							*(log.stream) << "\t\tjnz m" << num_of_points + 1 << endl;
+							generation << "\t\tjz m" << num_of_points << endl;
+							generation << "\t\tjnz m" << num_of_points + 1 << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_NOTEQUAL)
 						{
-							*(log.stream) << "\t\tjnz m" << num_of_points << endl;
-							*(log.stream) << "\t\tjz m" << num_of_points + 1 << endl;
+							generation << "\t\tjnz m" << num_of_points << endl;
+							generation << "\t\tjz m" << num_of_points + 1 << endl;
 						}
-						*(log.stream) << "\t\tje m" << num_of_points + 1 << endl;
+						generation << "\t\tje m" << num_of_points + 1 << endl;
 						int j = i;
 						while (lex.lextable.table[j++].lexema != LEX_RIGHTBRACE)
 						{
@@ -319,19 +321,19 @@ namespace CodeGeneration
 					switch (lex.idtable.table[lex.lextable.table[i + 1].idxTI].idDataType)
 					{
 					case IT::IDDATATYPE::INT:
-						*(log.stream) << "\npush " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << "\ncall nout\n";
+						generation << "\npush " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << "\ncall nout\n";
 						break;
 					case IT::IDDATATYPE::BOOL:
 					case IT::IDDATATYPE::STR:
 						if (lex.idtable.table[lex.lextable.table[i + 1].idxTI].idType == IT::IDTYPE::L)
-							*(log.stream) << "\npush offset " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << "\ncall sout\n";
-						else *(log.stream) << "\npush " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << "\ncall sout\n";
+							generation << "\npush offset " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << "\ncall sout\n";
+						else generation << "\npush " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << "\ncall sout\n";
 						break;
 					}
 					break;
 				}
 			}
 		}
-		Log::Close(log);
+		generation.close();
 	}
 }

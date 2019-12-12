@@ -35,5 +35,5 @@
 
 namespace CodeGeneration
 {
-	void CodeGeneration(Lexer::LEX lex, Log::LOG log);
+	void CodeGeneration(Lexer::LEX lex, wchar_t outfile[]);
 }

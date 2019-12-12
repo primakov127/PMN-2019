@@ -31,8 +31,7 @@ abser PROTO  : SDWORD
 	int11 SDWORD 55
 	int12 SDWORD 2
 	int13 SDWORD 2
-	str14 BYTE "hello world", 0
-	int15 SDWORD 0
+	int14 SDWORD 0
 .DATA
 	result10 SDWORD 0
 	t10 SDWORD 0
@@ -131,8 +130,8 @@ e0:
 	pop x62
 
 
-push offset str14
-call sout
+push x62
+call nout
 	push 0
 		jmp theend
 theend:

@@ -14,6 +14,7 @@ int _tmain(int argc, _TCHAR ** argv)
 		log = Log::getlog(parm.log);
 		Log::WriteLog(log);
 		Log::WriteParm(log, parm);
+		ofstream sin(parm.sin);
 
 		In::IN in = In::getin(parm.in, parm.out);
 		Log::WriteIn(log, in);
@@ -24,26 +25,23 @@ int _tmain(int argc, _TCHAR ** argv)
 
 		// Лексический анализ
 		Lexer::LEX lex = Lexer::fillingInTables(tokentable);
-		/*LT::showTable(lex.lextable, parm.lex);
-		IT::showTable(lex.idtable, parm.out);*/
 
 		// Синтаксический анализ
-		log = Log::getlog(parm.sin);
-		MFST_TRACE_START(log)
+		MFST_TRACE_START(sin)
 			MFST::Mfst mfst(lex, GRB::getGreibach());
 		mfst.start(log);
 		mfst.savededucation();
 		mfst.printrules(log);
 
-		log = Log::getlog(parm.log);
-		//CheckFunParam(lex.lextable, lex.idtable);
+		//log = Log::getlog(parm.log);
+
 		CallSemantic(lex.lextable, lex.idtable);
 		CallPolishNotation(lex.lextable, lex.idtable);
 
 		LT::showTable(lex.lextable, parm.lex);
-		IT::showTable(lex.idtable, parm.out);
+		IT::showTable(lex.idtable, parm.id);
 
-		CodeGeneration::CodeGeneration(lex, log);
+		CodeGeneration::CodeGeneration(lex, parm.out);
 		//CheckFunParam(lex.lextable, lex.idtable);
 	//	// 17
 	//	// 62
