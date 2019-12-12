@@ -18,12 +18,18 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="Main.asm">
+      <AssembledCodeListingFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)</AssembledCodeListingFile>
+    </MASM>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{31D37D08-161A-41D3-9F20-5220E78516AB}</ProjectGuid>
+    <ProjectGuid>{6FA6AD11-8312-43CA-BCC8-6463A2408AD8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>PMN2019</RootNamespace>
+    <RootNamespace>Lab17e</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>PMN_ASSEMBLER</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -54,6 +60,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -95,6 +102,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalOptions>E:\2k1s\LAB\PL\PL_04_ASM\Debug\LP_ASM_01d.lib%(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -150,58 +158,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="CodeGeneration.h" />
-    <ClInclude Include="Error.h" />
-    <ClInclude Include="FST.h" />
-    <ClInclude Include="Greibach.h" />
-    <ClInclude Include="Graphs.h" />
-    <ClInclude Include="In.h" />
-    <ClInclude Include="IT.h" />
-    <ClInclude Include="LEX.h" />
-    <ClInclude Include="LT.h" />
-    <ClInclude Include="MFST.h" />
-    <ClInclude Include="Polish.h" />
-    <ClInclude Include="Rules.h" />
-    <ClInclude Include="Semantic.h" />
-    <ClInclude Include="TOKEN.h" />
-    <ClInclude Include="Log.h" />
-    <ClInclude Include="Parm.h" />
-    <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="CodeGeneration.cpp" />
-    <ClCompile Include="Error.cpp" />
-    <ClCompile Include="FST.cpp" />
-    <ClCompile Include="Greibach.cpp" />
-    <ClCompile Include="In.cpp" />
-    <ClCompile Include="IT.cpp" />
-    <ClCompile Include="LEX.cpp" />
-    <ClCompile Include="LT.cpp" />
-    <ClCompile Include="MFST.cpp" />
-    <ClCompile Include="Polish.cpp" />
-    <ClCompile Include="Semantic.cpp" />
-    <ClCompile Include="TOKEN.cpp" />
-    <ClCompile Include="Log.cpp" />
-    <ClCompile Include="Parm.cpp" />
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="PMN-2019.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Debug\in.txt.lex" />
-    <None Include="..\Debug\in.txt.out" />
-    <None Include="..\Debug\in.txt.sin" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Debug\in.txt" />
-    <Text Include="..\Debug\in.txt.log" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
   </ImportGroup>
 </Project>

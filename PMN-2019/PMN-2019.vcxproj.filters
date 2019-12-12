@@ -63,6 +63,9 @@
     <ClInclude Include="Semantic.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="CodeGeneration.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -108,6 +111,9 @@
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Semantic.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="CodeGeneration.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

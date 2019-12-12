@@ -42,6 +42,7 @@
 #include "MFST.h"
 #include "Polish.h"
 #include "Semantic.h"
+#include "CodeGeneration.h"
 
 // польская запись
 //#include "PolishNotation.h"

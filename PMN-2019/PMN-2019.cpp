@@ -42,13 +42,15 @@ int _tmain(int argc, _TCHAR ** argv)
 
 		LT::showTable(lex.lextable, parm.lex);
 		IT::showTable(lex.idtable, parm.out);
+
+		CodeGeneration::CodeGeneration(lex, log);
 		//CheckFunParam(lex.lextable, lex.idtable);
 	//	// 17
 	//	// 62
 	//	// 130
 	//	LT::outTable(lex.lextable, parm.out);
 		
-		Log::Close(log);
+		//Log::Close(log);
 	}
 	catch (Error::ERROR e)
 	{
