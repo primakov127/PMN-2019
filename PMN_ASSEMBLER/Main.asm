@@ -17,28 +17,53 @@ abser PROTO  : SDWORD
 
 .CONST
 	null_division BYTE 'ERROR: DIVISION BY ZERO', 0
-	int0 SDWORD 35
-	int1 SDWORD 174
-	int2 SDWORD 175
-	int3 SDWORD 10
-	int4 SDWORD 6
-	int5 SDWORD 5
-	str6 BYTE "f", 0
-	int7 SDWORD 55
-	int8 SDWORD 14
-	int9 SDWORD 8
-	int10 SDWORD 2
-	int11 SDWORD 55
-	int12 SDWORD 2
-	int13 SDWORD 2
-	int14 SDWORD 0
+	true BYTE 'true', 0
+	false BYTE 'false', 0
+	int0 SDWORD 0
+	int1 SDWORD 1
+	int2 SDWORD 1
+	int3 SDWORD 1
+	int4 SDWORD 0
+	int5 SDWORD 10
+	str6 DWORD "dfg", 0
+	bool7 SDWORD 0
+	int8 SDWORD 5
+	int9 SDWORD 6
+	int10 SDWORD 6
+	int11 SDWORD 5
+	str12 DWORD "L", 0
+	int13 SDWORD 1
+	int14 SDWORD 4
+	int15 SDWORD 7
+	int16 SDWORD 1
+	str17 DWORD "5", 0
+	int18 SDWORD 5
+	str19 DWORD "f", 0
+	int20 SDWORD 55
+	int21 SDWORD 14
+	int22 SDWORD 8
+	int23 SDWORD 2
+	int24 SDWORD 55
+	int25 SDWORD 20
+	int26 SDWORD 3
+	int27 SDWORD 2
+	int28 SDWORD 5
+	int29 SDWORD 2
+	int30 SDWORD 2
+	int31 SDWORD 5
+	str32 DWORD "df", 0
+	int33 SDWORD 6
+	int34 SDWORD 0
 .DATA
 	result10 SDWORD 0
-	t10 SDWORD 0
-	x62 SDWORD 0
-	x77 DWORD ?
-	y77 SDWORD 0
-	y109 SDWORD 0
+	ty115 DWORD 0
+	x115 SDWORD 0
+	s115 DWORD ?
+	t149 SDWORD 0
+	x189 DWORD ?
+	y189 SDWORD 0
+	y221 SDWORD 0
+	f115 SDWORD 0
 
 .CODE
 
@@ -51,15 +76,6 @@ sum1 PROC a1 : SDWORD, b1 : SDWORD
 	push eax
 	pop result10
 
-	push int0
-	pop t10
-
-	push int1
-	pop t10
-
-	push int2
-	pop t10
-
 	push result10
 		jmp local0
 local0:
@@ -67,71 +83,227 @@ local0:
 	ret
 sum1 ENDP
 
-kam2 PROC b2 : SDWORD
-	push b2
+fuct2 PROC a2 : SDWORD
+	mov eax, a2
+	cmp eax, int0
+		jz m0
+		jnz m1
+		je m1
+m0:
+	push 1
+		jmp local1
+	jmp e0
+m1:
+	push a2
+	push int2
+	pop ebx
+	pop eax
+	sub eax, ebx
+	push eax
+	pop a2
+
+	push a2
 	push int3
 	pop eax
 	pop ebx
 	add eax, ebx
 	push eax
-	pop b2
-
-	push b2
-		jmp local1
-local1:
-	pop eax
-	ret
-kam2 ENDP
-
-main PROC
-	push int4
-	pop x62
-
-	mov eax, x62
-	cmp eax, int5
-		jg m0
-		jl m1
-		je m1
-m0:
-	push offset str6
-	pop x77
-
-	push int7
-	push int8
-	pop eax
-	pop ebx
-	add eax, ebx
+	push a2
+		call fuct2
 	push eax
-	push int9
 	pop eax
 	pop ebx
 	mul ebx
 	push eax
+	pop a2
+
+	push a2
+		jmp local1
+e0:
+	push 0
+		jmp local1
+local1:
+	pop eax
+	ret
+fuct2 ENDP
+
+kam3 PROC b3 : SDWORD, a3 : DWORD
+	push b3
+	push int5
+	pop eax
+	pop ebx
+	add eax, ebx
+	push eax
+	pop b3
+
+	push b3
+		jmp local2
+local2:
+	pop eax
+	ret
+kam3 ENDP
+
+str4 PROC a4 : DWORD
+	push offset str6
+	pop a4
+
+	push a4
+		jmp local3
+local3:
+	pop eax
+	ret
+str4 ENDP
+
+main PROC
+	push bool7
+	pop ty115
+
+	mov eax, ty115
+	cmp eax, 0
+		jz ty1150T
+		jnz ty1150F
+
+ty1150T:
+
+push offset false
+call soutl
+
+jmp ty1150
+
+ty1150F:
+
+push offset true
+call soutl
+
+ty1150:
+	push int8
+	push int9
+	pop eax
+	pop ebx
+	add eax, ebx
+	push eax
+	pop x115
+
 	push int10
+	pop x115
+
+while1:
+	mov eax, x115
+	cmp eax, int11
+		jg whileT1
+		jl whileEnd1
+whileT1:
+
+push offset str12
+call soutl
+	push x115
+	push int13
 	pop ebx
 	pop eax
 	sub eax, ebx
 	push eax
-	pop y77
+	pop x115
+
+	push int14
+	pop t149
+
+while2:
+	mov eax, t149
+	cmp eax, int15
+		jl whileT2
+		jg whileEnd2
+whileT2:
+	push t149
+	push int16
+	pop eax
+	pop ebx
+	add eax, ebx
+	push eax
+	pop t149
 
 
-push x77
-call sout
-	jmp e0
-m1:
-	push int11
-	pop y109
+push offset str17
+call soutl
+jmp while2
+whileEnd2:
+jmp while1
+whileEnd1:
+	mov eax, x115
+	cmp eax, int18
+		jg m2
+		jl m3
+		je m3
+m2:
+	push offset str19
+	pop x189
 
-e0:
-	push int12
-	push int13
+	push int20
+	push int21
+	pop eax
+	pop ebx
+	add eax, ebx
+	push eax
+	push int22
+	pop eax
+	pop ebx
+	mul ebx
+	push eax
+	push int23
+	pop ebx
+	pop eax
+	sub eax, ebx
+	push eax
+	pop y189
+
+
+push x189
+call soutl
+	jmp e1
+m3:
+	push int24
+	pop y221
+
+e1:
+	push int25
+	push int26
+	push int27
 		call power
 	push eax
-	pop x62
+	push int28
+	pop eax
+	pop ebx
+	add eax, ebx
+	push eax
+	push int29
+	pop eax
+	pop ebx
+	mul ebx
+	push eax
+	pop ebx
+	pop eax
+	sub eax, ebx
+	push eax
+	pop x115
+
+	push int30
+	push int31
+		call sum1
+	push eax
+	pop f115
+
+	push offset str32
+		call str4
+	push eax
+	pop s115
+
+	push int33
+		call fuct2
+	push eax
+	pop f115
 
 
-push x62
-call nout
+push f115
+call noutl
 	push 0
 		jmp theend
 theend:

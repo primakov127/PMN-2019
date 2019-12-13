@@ -127,6 +127,9 @@
     <None Include="..\Debug\in.txt.sin">
       <Filter>Файлы ресурсов</Filter>
     </None>
+    <None Include="..\Debug\in.txt.id">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Debug\in.txt.log">

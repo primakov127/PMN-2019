@@ -53,10 +53,48 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 					continue;
 				}
 				break;
-			default:															// Если слева стоит идентификатор string или dig
+			case IT::IDDATATYPE::STR:
+				for (int j = 0; lextable.table[i + j].lexema != LEX_SEMICOLON; j++)
+				{
+					if (lextable.table[i + j].lexema == LEX_PLUS || lextable.table[i + j].lexema == LEX_MINUS
+						|| lextable.table[i + j].lexema == LEX_DIRSLASH || lextable.table[i + j].lexema == LEX_STAR
+						|| lextable.table[i + j].lexema == LEX_REMDIV || lextable.table[i + j].lexema == LEX_LESS
+						|| lextable.table[i + j].lexema == LEX_GREAT || lextable.table[i + j].lexema == LEX_EQUALEQUAL
+						|| lextable.table[i + j].lexema == LEX_NOTEQUAL)
+						throw ERROR_THROW_IN(152, lextable.table[i + j].sn, 0);
+					if (lextable.table[i + j].lexema == LEX_ID || lextable.table[i + j].lexema == LEX_LITERAL)
+					{
+						if (idtable.table[lextable.table[i + j].idxTI].idType == IT::IDTYPE::F)
+						{
+							if (idtable.table[lextable.table[i + j].idxTI].idDataType != type)
+								throw ERROR_THROW_IN(143, lextable.table[i + j].sn, 0);
+							int countOfHesis = 0;
+							if (lextable.table[i + j + 1].lexema != LEX_LEFTHESIS)
+								throw ERROR_THROW_IN(150, lextable.table[i + j].sn, 0);
+							do
+							{
+								j++;
+								if (lextable.table[i + j].lexema == LEX_LEFTHESIS)
+									countOfHesis++;
+								if (lextable.table[i + j].lexema == LEX_RIGHTHESIS)
+									countOfHesis--;
+							} while (countOfHesis != 0);
+						}
+						else if (idtable.table[lextable.table[i + j].idxTI].idDataType != type)
+							throw ERROR_THROW_IN(143, lextable.table[i + j].sn, 0);
+
+					}
+						
+				}
+
+				break;
+			case IT::IDDATATYPE::INT:															// Если слева стоит идентификатор string или dig
 				int index = 0;
 				while (lextable.table[i + index].lexema != LEX_SEMICOLON)
 				{
+					if (lextable.table[i + index].lexema == LEX_LESS || lextable.table[i + index].lexema == LEX_GREAT 
+						|| lextable.table[i + index].lexema == LEX_EQUALEQUAL || lextable.table[i + index].lexema == LEX_NOTEQUAL)
+						throw ERROR_THROW_IN(602, lextable.table[i + index].sn, 0);
 					if (lextable.table[i + index].lexema == LEX_ID || lextable.table[i + index].lexema == LEX_LITERAL
 						|| lextable.table[i + index].lexema == LEX_POW || lextable.table[i + index].lexema == LEX_ABS)
 					{

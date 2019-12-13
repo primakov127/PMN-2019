@@ -51,29 +51,29 @@ namespace Log
 		localtime_s(&now, &t);
 		char date[PARM_MAX_SIZE];
 		strftime(date, PARM_MAX_SIZE, "%d.%m.%Y %H:%M:%S", &now);
-		*log.stream << "---- Протокол -------\n Дата: " << date << std::endl;
+		*log.stream << "-------------- Протокол ----------------\n Дата: " << date << std::endl;
 	}
 
 	void WriteParm(LOG log, Parm::PARM parm)
 	{
-		*log.stream << "---- Параметры -------" << std::endl;
+		*log.stream << "------------- Параметры ----------------" << std::endl;
 		char out[PARM_MAX_SIZE];
 		size_t charsConverted(0);
-		wcstombs_s(&charsConverted, out, parm.log, PARM_MAX_SIZE);
-		*log.stream << "-log: " << out << std::endl;
-		wcstombs_s(&charsConverted, out, parm.out, PARM_MAX_SIZE);
-		*log.stream << "-out: " << out << std::endl;
 		wcstombs_s(&charsConverted, out, parm.in, PARM_MAX_SIZE);
-		*log.stream << "-in: " << out << std::endl;
+		*log.stream << " -in: " << out << std::endl;
+		wcstombs_s(&charsConverted, out, parm.log, PARM_MAX_SIZE);
+		*log.stream << " -log: " << out << std::endl;
+		wcstombs_s(&charsConverted, out, parm.out, PARM_MAX_SIZE);
+		*log.stream << " -out: " << out << std::endl;
 	}
 
 	void WriteIn(LOG log, In::IN in)
 	{
-		*log.stream << "---- Исходные данные -----" << std::endl;
-		*log.stream << "Количество символов: " << in.size << std::endl;
-		*log.stream << "Проигнорировано:     " << in.ignor << std::endl;
-		*log.stream << "Количество строк:    " << in.lines << std::endl;
-		*log.stream << "--------------------------" << std::endl;
+		*log.stream << "---------- Исходные данные -------------" << std::endl;
+		*log.stream << " Количество символов: " << in.size << std::endl;
+		*log.stream << " Проигнорировано:     " << in.ignor << std::endl;
+		*log.stream << " Количество строк:    " << in.lines << std::endl;
+		*log.stream << "----------------------------------------" << std::endl;
 	}
 
 	void WriteError(LOG log, Error::ERROR error)

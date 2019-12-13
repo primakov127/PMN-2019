@@ -238,6 +238,14 @@ struct GRAPH
 	FST::NODE(1, FST::RELATION('t', 3)), \
 	FST::NODE()
 
+#define GRAPH_OUTL \
+	5,	\
+	FST::NODE(1, FST::RELATION('o', 1)), \
+	FST::NODE(1, FST::RELATION('u', 2)), \
+	FST::NODE(1, FST::RELATION('t', 3)), \
+	FST::NODE(1, FST::RELATION('l', 4)), \
+	FST::NODE()
+
 #define GRAPH_ID \
 	2, \
 	FST::NODE(52, \

@@ -23,6 +23,7 @@ namespace Lexer
 		{ LEX_NEW, FST::FST(GRAPH_NEW) },
 		{ LEX_RETURN, FST::FST(GRAPH_RETURN) },
 		{ LEX_OUT, FST::FST(GRAPH_OUT) },
+		{ LEX_OUTL, FST::FST(GRAPH_OUTL) },
 		{ LEX_MAIN, FST::FST(GRAPH_MAIN) },
 		{ LEX_LITERAL, FST::FST(GRAPH_INT_LITERAL) },
 		{ LEX_LITERAL, FST::FST(GRAPH_STRING_LITERAL) },
@@ -137,6 +138,7 @@ namespace Lexer
 				idType = IT::IDTYPE::P;
 				idDataType = IT::IDDATATYPE::NON;
 				GlobalFunIsFound = false;
+				isDeclare = false;
 				break;
 			case LEX_LITERAL:
 				if (tokenTable.table[index].token[0] == '\"')
@@ -179,7 +181,7 @@ namespace Lexer
 						vint = strtol(tokenTable.table[index].token, NULL, 10);
 						break;
 					}
-					if (abs(vint) > INTEGER_MAX)
+					if (vint < -128 || vint > 127)
 						throw ERROR_THROW_IN(138, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 					id = "int" + to_string(numOfLit++);
 					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::INT, IT::IDTYPE::L, vint));
@@ -233,9 +235,6 @@ namespace Lexer
 							areaOfVisibility.pop();
 						areaOfVisibility.push(globalAreaOfVisibility);
 					}
-					break;
-				case LEX_SEMICOLON:
-					isDeclare = false;
 					break;
 				default:
 					break;

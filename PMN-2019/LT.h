@@ -17,6 +17,7 @@
 #define LEX_NEW		    'n'             // лексема для new
 #define LEX_RETURN      'r'             // лексема для return
 #define LEX_OUT			'o'             // лексема для out
+#define LEX_OUTL		'_'				// лексема для outl
 #define LEX_MAIN		'm'				// лексема для main
 #define LEX_POW			'p'				// лексема для встроенной ф-ции pow()
 #define LEX_ABS			'a'				// лексема для встроенной ф-ции abs()

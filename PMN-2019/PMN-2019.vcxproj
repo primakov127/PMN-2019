@@ -193,6 +193,7 @@
     <ClCompile Include="PMN-2019.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Debug\in.txt.id" />
     <None Include="..\Debug\in.txt.lex" />
     <None Include="..\Debug\in.txt.out" />
     <None Include="..\Debug\in.txt.sin" />

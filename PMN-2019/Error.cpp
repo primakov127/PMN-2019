@@ -63,7 +63,7 @@ namespace Error
 		ERROR_ENTRY(149, "Данная функция уже имеет реализацию"),
 		ERROR_ENTRY(150, "В вызове функции отсутствуют ()"),
 		ERROR_ENTRY(151, "Тип возвращаемого значения не соответствует типу функции"),
-		ERROR_ENTRY_NODEF(152),
+		ERROR_ENTRY(152, "Оператор не перегружен для работы со строками"),
 		ERROR_ENTRY_NODEF(153), ERROR_ENTRY_NODEF(154), ERROR_ENTRY_NODEF(155),
 		ERROR_ENTRY_NODEF(156), ERROR_ENTRY_NODEF(157), ERROR_ENTRY_NODEF(158),
 		ERROR_ENTRY_NODEF(159),
