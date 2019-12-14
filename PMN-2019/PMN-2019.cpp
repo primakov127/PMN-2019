@@ -62,11 +62,13 @@ int _tmain(int argc, _TCHAR ** argv)
 
 
 		Log::Close(log);
+		cout << "Успех трансляции / Successful broadcast" << endl;
 	}
 	catch (Error::ERROR e)
 	{
 		Log::WriteLine(log, "- ERROR\n", "");
 		Log::WriteError(log, e);
+		cout << "Ошибка трансляции / Broadcast error" << endl;
 	}
 	return 0;
 }

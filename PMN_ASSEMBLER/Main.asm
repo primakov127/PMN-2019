@@ -28,51 +28,54 @@ abser PROTO  : SDWORD
 	str6 DWORD "dfg", 0
 	bool7 SDWORD 0
 	int8 SDWORD 5
-	int9 SDWORD 6
-	int10 SDWORD 6
-	int11 SDWORD 5
-	str12 DWORD "L", 0
-	int13 SDWORD 1
-	int14 SDWORD 4
-	int15 SDWORD 7
-	int16 SDWORD 1
-	str17 DWORD "5", 0
-	int18 SDWORD 5
-	str19 DWORD "f", 0
-	int20 SDWORD 55
-	int21 SDWORD 14
-	int22 SDWORD 8
-	int23 SDWORD 2
-	int24 SDWORD 55
-	int25 SDWORD 20
-	int26 SDWORD 3
-	int27 SDWORD 2
-	int28 SDWORD 5
+	int9 SDWORD 4
+	int10 SDWORD 5
+	int11 SDWORD 6
+	int12 SDWORD 6
+	int13 SDWORD 5
+	str14 DWORD "L", 0
+	int15 SDWORD 1
+	int16 SDWORD 4
+	int17 SDWORD 7
+	int18 SDWORD 1
+	str19 DWORD "5", 0
+	int20 SDWORD 5
+	str21 DWORD "f", 0
+	int22 SDWORD 55
+	int23 SDWORD 14
+	int24 SDWORD 8
+	int25 SDWORD 2
+	int26 SDWORD 55
+	int27 SDWORD 20
+	int28 SDWORD 3
 	int29 SDWORD 2
-	int30 SDWORD 2
-	int31 SDWORD 5
-	str32 DWORD "df", 0
-	int33 SDWORD 6
-	int34 SDWORD 0
+	int30 SDWORD 5
+	int31 SDWORD 2
+	int32 SDWORD 2
+	int33 SDWORD 5
+	int34 SDWORD 5
+	str35 DWORD "df", 0
+	int36 SDWORD 0
 .DATA
 	result10 SDWORD 0
 	ty115 DWORD 0
 	x115 SDWORD 0
 	s115 DWORD ?
-	t149 SDWORD 0
-	x189 DWORD ?
-	y189 SDWORD 0
-	y221 SDWORD 0
+	t155 SDWORD 0
+	x201 DWORD ?
+	y201 SDWORD 0
+	y233 SDWORD 0
 	f115 SDWORD 0
+	eax115 SDWORD 0
 
 .CODE
 
-sum1 PROC a1 : SDWORD, b1 : SDWORD
+sum1 PROC b1 : SDWORD, a1 : SDWORD
 	push a1
 	push b1
-	pop eax
 	pop ebx
-	add eax, ebx
+	pop eax
+	sub eax, ebx
 	push eax
 	pop result10
 
@@ -127,7 +130,7 @@ local1:
 	ret
 fuct2 ENDP
 
-kam3 PROC b3 : SDWORD, a3 : DWORD
+kam3 PROC a3 : DWORD, b3 : SDWORD
 	push b3
 	push int5
 	pop eax
@@ -158,6 +161,9 @@ main PROC
 	push bool7
 	pop ty115
 
+	push 1
+	pop ty115
+
 	mov eax, ty115
 	cmp eax, 0
 		jz ty1150T
@@ -176,105 +182,111 @@ push offset true
 call soutl
 
 ty1150:
-	push int8
-	push int9
+	push int10
+	push int11
 	pop eax
 	pop ebx
 	add eax, ebx
 	push eax
 	pop x115
 
-	push int10
+	push int12
 	pop x115
 
 while1:
 	mov eax, x115
-	cmp eax, int11
+	cmp eax, int13
 		jg whileT1
-		jl whileEnd1
+		jle whileEnd1
 whileT1:
 
-push offset str12
+push x115
+call noutl
+
+push offset str14
 call soutl
 	push x115
-	push int13
+	push int15
 	pop ebx
 	pop eax
 	sub eax, ebx
 	push eax
 	pop x115
 
-	push int14
-	pop t149
+
+push x115
+call noutl
+	push int16
+	pop t155
 
 while2:
-	mov eax, t149
-	cmp eax, int15
+	mov eax, t155
+	cmp eax, int17
 		jl whileT2
-		jg whileEnd2
+		jge whileEnd2
 whileT2:
-	push t149
-	push int16
+	push t155
+	push int18
 	pop eax
 	pop ebx
 	add eax, ebx
 	push eax
-	pop t149
+	pop t155
 
 
-push offset str17
+push offset str19
 call soutl
 jmp while2
 whileEnd2:
 jmp while1
 whileEnd1:
 	mov eax, x115
-	cmp eax, int18
+	cmp eax, int20
 		jg m2
-		jl m3
+		jle m3
 		je m3
 m2:
-	push offset str19
-	pop x189
+	push offset str21
+	pop x201
 
-	push int20
-	push int21
+	push int22
+	push int23
 	pop eax
 	pop ebx
 	add eax, ebx
 	push eax
-	push int22
+	push int24
 	pop eax
 	pop ebx
 	mul ebx
 	push eax
-	push int23
+	push int25
 	pop ebx
 	pop eax
 	sub eax, ebx
 	push eax
-	pop y189
+	pop y201
 
 
-push x189
+push x201
 call soutl
 	jmp e1
 m3:
-	push int24
-	pop y221
+	push int26
+	pop y233
 
 e1:
-	push int25
-	push int26
 	push int27
+	push int28
+	push int29
 		call power
 	push eax
-	push int28
+	push int30
 	pop eax
 	pop ebx
 	add eax, ebx
 	push eax
-	push int29
+	push int31
 	pop eax
 	pop ebx
 	mul ebx
@@ -285,21 +297,19 @@ e1:
 	push eax
 	pop x115
 
-	push int30
-	push int31
+	push int32
+	push int33
 		call sum1
 	push eax
 	pop f115
 
-	push offset str32
+	push int34
+	pop eax115
+
+	push offset str35
 		call str4
 	push eax
 	pop s115
-
-	push int33
-		call fuct2
-	push eax
-	pop f115
 
 
 push f115

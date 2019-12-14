@@ -78,16 +78,20 @@ namespace CodeGeneration
 				case LEX_FUNCTION:
 				{
 					generation << (func_name = lex.idtable.table[lex.lextable.table[++i].idxTI].id) << " PROC ";
-					while (lex.lextable.table[i].lexema != LEX_RIGHTHESIS)
+					int ind = i;
+					for (; lex.lextable.table[ind].lexema != LEX_RIGHTHESIS; ind++);
+
+					i = ind;
+					while (lex.lextable.table[ind].lexema != LEX_LEFTHESIS)
 					{
-						if (lex.idtable.table[lex.lextable.table[i].idxTI].idType == IT::P)
+						if (lex.idtable.table[lex.lextable.table[ind].idxTI].idType == IT::P)
 						{
-							generation << lex.idtable.table[lex.lextable.table[i].idxTI].id << " : ";
-							if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::INT)
+							generation << lex.idtable.table[lex.lextable.table[ind].idxTI].id << " : ";
+							if (lex.idtable.table[lex.lextable.table[ind].idxTI].idDataType == IT::INT)
 							{
 								generation << "SDWORD";
 							}
-							else if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::STR)
+							else if (lex.idtable.table[lex.lextable.table[ind].idxTI].idDataType == IT::STR)
 							{
 								generation << "DWORD";
 							}
@@ -96,11 +100,12 @@ namespace CodeGeneration
 								generation << "DWORD";
 							}
 						}
-						if (lex.lextable.table[i].lexema == LEX_COMMA)
+						if (lex.lextable.table[ind].lexema == LEX_COMMA)
 						{
 							generation << ", ";
 						}
-						i++;
+						//i++;
+						ind--;
 					}
 					flag_func = true;
 					generation << endl;
@@ -361,12 +366,12 @@ namespace CodeGeneration
 						if (lex.lextable.table[i + 2].lexema == LEX_GREAT)
 						{
 							generation << "\t\tjg m" << num_of_points << endl;
-							generation << "\t\tjl m" << num_of_points + 1 << endl;
+							generation << "\t\tjle m" << num_of_points + 1 << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_LESS)
 						{
 							generation << "\t\tjl m" << num_of_points << endl;
-							generation << "\t\tjg m" << num_of_points + 1 << endl;
+							generation << "\t\tjge m" << num_of_points + 1 << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_EQUALEQUAL)
 						{
@@ -400,12 +405,12 @@ namespace CodeGeneration
 						if (lex.lextable.table[i + 2].lexema == LEX_GREAT)
 						{
 							generation << "\t\tjg whileT" << num_of_while << endl;
-							generation << "\t\tjl whileEnd" << num_of_while << endl;
+							generation << "\t\tjle whileEnd" << num_of_while << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_LESS)
 						{
 							generation << "\t\tjl whileT" << num_of_while << endl;
-							generation << "\t\tjg whileEnd" << num_of_while << endl;
+							generation << "\t\tjge whileEnd" << num_of_while << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_EQUALEQUAL)
 						{
