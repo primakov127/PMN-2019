@@ -91,7 +91,7 @@ namespace FST
 		return rc;
 	};
 
-	bool execute(FST& fst)											// выполнить распознование цепочки
+	bool execute(FST& fst)												// выполнить распознование цепочки
 	{
 		short* rstates = new short[fst.nstates];
 		memset(rstates, 0xff, sizeof(short)*fst.nstates);
@@ -99,8 +99,8 @@ namespace FST
 		bool rc = true;
 		for (short i = 0; i < lstring && rc; i++)
 		{
-			fst.position++;											// продвинули одну позицию
-			rc = step(fst, rstates);								// один шаг автомата
+			fst.position++;												// продвинули одну позицию
+			rc = step(fst, rstates);									// один шаг автомата
 		}
 		delete[] rstates;
 		return (rc ? (fst.rstates[fst.nstates - 1] == lstring) : rc);

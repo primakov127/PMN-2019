@@ -5,7 +5,7 @@ namespace IT
 	IdTable Create(int size)								//	Ф-ция создания таблицы идентификаторов
 	{
 		if (size > TI_MAXSIZE)								//	Ошибка, если size > TI_MAXSIZE
-			throw ERROR_THROW(123);
+			throw ERROR_THROW(114);
 
 		IdTable idtable;
 		idtable.maxsize = size;								//	Создание таблицы идентификаторов
@@ -18,7 +18,7 @@ namespace IT
 	void Add(IdTable& idtable, Entry entry)					//	Добавление строки в таблице идентификаторов
 	{
 		if (idtable.size > idtable.maxsize)					//	Проверка: есть ли свободное место в таблице идентификаторов
-			throw ERROR_THROW(124);							//	Если нет, то ошибка
+			throw ERROR_THROW(115);							//	Если нет, то ошибка
 
 		idtable.table[idtable.size] = entry;				//	Добавление строки в таблицу под индексом = текущему размеру таблицы
 		idtable.size++;										//	Увеличение текущего размера таблицы, т.к. была добавлена новая строка
@@ -27,7 +27,7 @@ namespace IT
 	Entry GetEntry(IdTable& idtable, int n)					//	Получение строки таблицы идентификатора
 	{
 		if (n > (idtable.size - 1))							//	Проверка: есть ли строка с таким номером входит в таблицу идентификаторов
-			throw ERROR_THROW(125);							//	Если нет, то ошибка
+			throw ERROR_THROW(116);							//	Если нет, то ошибка
 
 		return idtable.table[n];							//	Возвращает строку таблицы идентификаторов
 	}
@@ -90,7 +90,7 @@ namespace IT
 	{
 		std::ofstream file(outfile);
 		if (!file.is_open())
-			throw ERROR_THROW(114);
+			throw ERROR_THROW(24);
 
 		int iddatatype;
 		int idtype;

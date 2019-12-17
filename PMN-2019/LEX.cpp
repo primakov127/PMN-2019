@@ -68,7 +68,7 @@ namespace Lexer
 				return graph[i].lex;
 			}
 		}
-		throw ERROR_THROW_IN(126, token.line, 0);
+		throw ERROR_THROW_IN(117, token.line, 0);
 	}
 
 	LEX fillingInTables(TOKEN::TokenTable tokenTable)
@@ -112,7 +112,7 @@ namespace Lexer
 				}
 				else if (lineIT == TI_NULLIDX)															// Если просто не было найдено
 				{
-					throw ERROR_THROW_IN(140, tokenTable.table[index].line, tokenTable.table[index].linePosition);
+					throw ERROR_THROW_IN(135, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 				}
 				else if (lineIT != TI_NULLIDX && isDeclare)												// Если было найдено и это объявление, то проверка
 				{																						// на повторное объявление в одном блоке
@@ -120,7 +120,7 @@ namespace Lexer
 						|| (IT::GetEntry(lex.idtable, lineIT)).id == string(tokenTable.table[index].token) + to_string(globalAreaOfVisibility) && ((IT::GetEntry(lex.idtable, lineIT)).idType == IT::IDTYPE::F) 
 						|| (IT::GetEntry(lex.idtable, lineIT)).id == string(tokenTable.table[index].token) + to_string(globalAreaOfVisibility) && ((IT::GetEntry(lex.idtable, lineIT)).idType == IT::IDTYPE::P) && (isNotGlobal == 1))
 					{
-						throw ERROR_THROW_IN(141, tokenTable.table[index].line, tokenTable.table[index].linePosition);
+						throw ERROR_THROW_IN(136, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 					}
 					else
 					{
@@ -130,7 +130,7 @@ namespace Lexer
 					}
 				}
 				else if (lineIT != TI_NULLIDX && idType == IT::IDTYPE::F)
-					throw ERROR_THROW_IN(149, tokenTable.table[index].line, tokenTable.table[index].linePosition);
+					throw ERROR_THROW_IN(143, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 					
 				// Проверка повторного объявления
 
@@ -182,7 +182,7 @@ namespace Lexer
 						break;
 					}
 					if (vint < -128 || vint > 127)
-						throw ERROR_THROW_IN(138, tokenTable.table[index].line, tokenTable.table[index].linePosition);
+						throw ERROR_THROW_IN(133, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 					id = "int" + to_string(numOfLit++);
 					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::INT, IT::IDTYPE::L, vint));
 				}
@@ -226,7 +226,7 @@ namespace Lexer
 					break;
 				case LEX_MAIN:
 					if (isMain)
-						throw ERROR_THROW_IN(136, tokenTable.table[index].line, tokenTable.table[index].linePosition);
+						throw ERROR_THROW_IN(131, tokenTable.table[index].line, tokenTable.table[index].linePosition);
 					isMain = true;
 					if (!isNotGlobal)
 					{
@@ -244,7 +244,7 @@ namespace Lexer
 			}
 		}
 		if (!isMain)
-			throw ERROR_THROW_IN(139, -1, -1);
+			throw ERROR_THROW_IN(134, -1, -1);
 		return lex;
 	}
 

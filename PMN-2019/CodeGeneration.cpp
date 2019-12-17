@@ -60,7 +60,8 @@ namespace CodeGeneration
 			num_of_ret = 0,
 			num_of_ends = 0,
 			num_of_boolCompare = 0,
-			num_of_while = 0;
+			num_of_while = 0,
+			num_of_if = 0;
 		string strret = "",
 			func_name = "";					// имя локальной функции
 		bool flag_func = false,					// внутри локальной функции?
@@ -68,6 +69,7 @@ namespace CodeGeneration
 			flag_main = false,					// внутри главной функции?
 			flag_if = false,					// внутри if?
 			flag_then = false,					// внутри then?
+			flag_while = false,
 			flag_else = false;					// внутри then/else?
 		generation << "\n.CODE\n\n";
 
@@ -299,7 +301,7 @@ namespace CodeGeneration
 				}
 				case LEX_RIGHTBRACE:
 				{
-					if (flag_main && !flag_then && !flag_else && !flag_func && !num_of_while)
+					if (flag_main && !flag_else && !num_of_if && !flag_func && !num_of_while)
 					{
 						if (flag_return)
 						{
@@ -319,20 +321,23 @@ namespace CodeGeneration
 						generation << func_name << " ENDP\n\n";
 						flag_func = false;
 					}
-					if (flag_then)
+					if (num_of_if && !flag_else && !num_of_while)
 					{
-						flag_then = false;
-						if (flag_else)
+						if (lex.lextable.table[i + 1].lexema == LEX_ELSE)
 						{
-							generation << "\tjmp e" << num_of_ends << endl;
-							flag_else = false;
+							generation << "\tjmp ifEnd" << num_of_if << endl;
 						}
-						generation << "m" << num_of_points++ << ":\n";
+						else
+						{
+							generation << "else" << num_of_if << ":\n";
+							num_of_if--;
+						}
 					}
 					if (flag_else)
 					{
+						generation << "ifEnd" << num_of_if << ":\n";
 						flag_else = false;
-						generation << "e" << num_of_ends++ << ":\n";
+						num_of_if--;
 					}
 					if (num_of_while)
 					{
@@ -342,62 +347,57 @@ namespace CodeGeneration
 					break;
 				}
 				case LEX_LEFTBRACE:
-					if (flag_then)
+					if (num_of_if && !flag_else && flag_if)
 					{
-						generation << "m" << num_of_points++ << ":\n";
+						generation << "ifi" << num_of_if << ":\n";
+						flag_if = false;
 					}
-					if (num_of_while)
+					if (flag_else && lex.lextable.table[i - 1].lexema == LEX_ELSE)
+					{
+						generation << "else" << num_of_if << ":\n";
+					}
+					if (num_of_while && flag_while)
 					{
 						generation << "whileT" << num_of_while << ":\n";
+						flag_while = false;
 					}
 					break;
 				case LEX_IF:
 				{
 					flag_if = true;
-					flag_then = true;
+					//flag_then = true;
+					num_of_if++;
 					break;
 				}
 				case LEX_LEFTHESIS:
 				{
-					if (flag_if)
+					if (num_of_if && lex.lextable.table[i - 1].lexema == LEX_IF)
 					{
 						generation << "\tmov eax, " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << endl;
 						generation << "\tcmp eax, " << lex.idtable.table[lex.lextable.table[i + 3].idxTI].id << endl;
 						if (lex.lextable.table[i + 2].lexema == LEX_GREAT)
 						{
-							generation << "\t\tjg m" << num_of_points << endl;
-							generation << "\t\tjle m" << num_of_points + 1 << endl;
+							generation << "\t\tjg ifi" << num_of_if << endl;
+							generation << "\t\tjle else" << num_of_if << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_LESS)
 						{
-							generation << "\t\tjl m" << num_of_points << endl;
-							generation << "\t\tjge m" << num_of_points + 1 << endl;
+							generation << "\t\tjl ifi" << num_of_if << endl;
+							generation << "\t\tjge else" << num_of_if << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_EQUALEQUAL)
 						{
-							generation << "\t\tjz m" << num_of_points << endl;
-							generation << "\t\tjnz m" << num_of_points + 1 << endl;
+							generation << "\t\tjz ifi" << num_of_if << endl;
+							generation << "\t\tjnz else" << num_of_if << endl;
 						}
 						else if (lex.lextable.table[i + 2].lexema == LEX_NOTEQUAL)
 						{
-							generation << "\t\tjnz m" << num_of_points << endl;
-							generation << "\t\tjz m" << num_of_points + 1 << endl;
+							generation << "\t\tjnz ifi" << num_of_if << endl;
+							generation << "\t\tjz else" << num_of_if << endl;
 						}
-						generation << "\t\tje m" << num_of_points + 1 << endl;
-						int j = i;
-						while (lex.lextable.table[j++].lexema != LEX_RIGHTBRACE)
-						{
-							if (lex.lextable.table[j + 1].lexema == LEX_ELSE)
-							{
-								flag_else = true;
-								break;
-							}
-						}
-						if (!flag_else)
-							flag_then = true;
-						flag_if = false;
+						
 					}
-					else if (num_of_while)
+					else if (num_of_while && lex.lextable.table[i - 1].lexema == LEX_WHILE)
 					{
 						generation << "while" << num_of_while << ":" << endl;
 						generation << "\tmov eax, " << lex.idtable.table[lex.lextable.table[i + 1].idxTI].id << endl;
@@ -490,6 +490,7 @@ namespace CodeGeneration
 				}
 				case LEX_WHILE:
 				{
+					flag_while = true;
 					num_of_while++;
 					break;
 				}

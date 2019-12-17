@@ -13,7 +13,7 @@ namespace Log
 		LOG temp;
 		temp.stream = new std::ofstream(logfile);
 		if (!temp.stream->is_open())
-			throw ERROR_THROW(112);
+			throw ERROR_THROW(21);
 		wcscpy_s(temp.logfile, logfile);
 		return temp;
 	}

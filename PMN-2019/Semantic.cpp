@@ -19,7 +19,7 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 		if (lextable.table[i].lexema == LEX_EQUAL)
 		{
 			if (idtable.table[lextable.table[i - 1].idxTI].idType != IT::IDTYPE::V && idtable.table[lextable.table[i - 1].idxTI].idType != IT::IDTYPE::P)
-				throw ERROR_THROW_IN(148, lextable.table[i - 1].sn, 0);
+				throw ERROR_THROW_IN(142, lextable.table[i - 1].sn, 0);
 			IT::IDDATATYPE type = idtable.table[lextable.table[i - 1].idxTI].idDataType;
 
 			int indexB = 0;
@@ -45,7 +45,7 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 						}
 
 						if (idtable.table[lextable.table[i + indexB].idxTI].idDataType != type1)
-							throw ERROR_THROW_IN(143, lextable.table[i + indexB].sn, 0);
+							throw ERROR_THROW_IN(137, lextable.table[i + indexB].sn, 0);
 					}
 
 					
@@ -61,16 +61,16 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 						|| lextable.table[i + j].lexema == LEX_REMDIV || lextable.table[i + j].lexema == LEX_LESS
 						|| lextable.table[i + j].lexema == LEX_GREAT || lextable.table[i + j].lexema == LEX_EQUALEQUAL
 						|| lextable.table[i + j].lexema == LEX_NOTEQUAL)
-						throw ERROR_THROW_IN(152, lextable.table[i + j].sn, 0);
+						throw ERROR_THROW_IN(146, lextable.table[i + j].sn, 0);
 					if (lextable.table[i + j].lexema == LEX_ID || lextable.table[i + j].lexema == LEX_LITERAL)
 					{
 						if (idtable.table[lextable.table[i + j].idxTI].idType == IT::IDTYPE::F)
 						{
 							if (idtable.table[lextable.table[i + j].idxTI].idDataType != type)
-								throw ERROR_THROW_IN(143, lextable.table[i + j].sn, 0);
+								throw ERROR_THROW_IN(137, lextable.table[i + j].sn, 0);
 							int countOfHesis = 0;
 							if (lextable.table[i + j + 1].lexema != LEX_LEFTHESIS)
-								throw ERROR_THROW_IN(150, lextable.table[i + j].sn, 0);
+								throw ERROR_THROW_IN(144, lextable.table[i + j].sn, 0);
 							do
 							{
 								j++;
@@ -81,7 +81,7 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 							} while (countOfHesis != 0);
 						}
 						else if (idtable.table[lextable.table[i + j].idxTI].idDataType != type)
-							throw ERROR_THROW_IN(143, lextable.table[i + j].sn, 0);
+							throw ERROR_THROW_IN(137, lextable.table[i + j].sn, 0);
 
 					}
 						
@@ -101,10 +101,10 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 						if (idtable.table[lextable.table[i + index].idxTI].idType == IT::IDTYPE::F)
 						{
 							if (idtable.table[lextable.table[i + index].idxTI].idDataType != type)
-								throw ERROR_THROW_IN(143, lextable.table[i + index].sn, 0);
+								throw ERROR_THROW_IN(137, lextable.table[i + index].sn, 0);
 							int countOfHesis = 0;
 							if (lextable.table[i + index + 1].lexema != LEX_LEFTHESIS)
-								throw ERROR_THROW_IN(150, lextable.table[i + index].sn, 0);
+								throw ERROR_THROW_IN(144, lextable.table[i + index].sn, 0);
 							do
 							{
 								index++;
@@ -117,7 +117,7 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 						else if (lextable.table[i + index].lexema == LEX_POW || lextable.table[i + index].lexema == LEX_ABS)
 						{
 							if (type != IT::IDDATATYPE::INT)
-								throw ERROR_THROW_IN(143, lextable.table[i + index].sn, 0);
+								throw ERROR_THROW_IN(137, lextable.table[i + index].sn, 0);
 							int countOfHesis = 0;
 							do
 							{
@@ -131,7 +131,7 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 						else
 						{
 							if (idtable.table[lextable.table[i + index].idxTI].idDataType != type)
-								throw ERROR_THROW_IN(143, lextable.table[i + index].sn, 0);
+								throw ERROR_THROW_IN(137, lextable.table[i + index].sn, 0);
 						}
 					}
 					index++;
@@ -155,7 +155,7 @@ void FillFunctions(Functions& functions, IT::IdTable& idtable)
 			while (idtable.table[i + 1].idType == IT::IDTYPE::P)
 			{
 				if (temp.countOfParam > 8)
-					throw ERROR_THROW_IN(144, idtable.table[i].idxfirstLE, 0)
+					throw ERROR_THROW_IN(138, idtable.table[i].idxfirstLE, 0)
 				temp.types[temp.countOfParam] = idtable.table[i + 1].idDataType;
 				temp.countOfParam++;
 				i++;
@@ -180,13 +180,13 @@ void CheckFunParam(Functions& functions, IT::IdTable& idtable, LT::LexTable& lex
 					if (lextable.table[j + k].lexema == LEX_ID || lextable.table[j + k].lexema == LEX_LITERAL)
 					{
 						if (temp.countOfParam > 8)
-							throw ERROR_THROW_IN(144, lextable.table[j].sn, 0);
+							throw ERROR_THROW_IN(138, lextable.table[j].sn, 0);
 						temp.types[temp.countOfParam] = idtable.table[lextable.table[j + k].idxTI].idDataType;
 						temp.countOfParam++;
 					}
 				}
 				if (!isEqual(temp, functions.table[i]))
-					throw ERROR_THROW_IN(146, lextable.table[j].sn, 0);
+					throw ERROR_THROW_IN(140, lextable.table[j].sn, 0);
 			}
 		}
 	}
@@ -205,7 +205,7 @@ void CheckBuiltInFunParam(LT::LexTable& lextable, IT::IdTable& idtable)
 			while (lextable.table[i + 1].lexema != LEX_RIGHTHESIS)
 			{
 				if (idtable.table[lextable.table[i + 1].idxTI].idDataType == IT::IDDATATYPE::STR)
-					throw ERROR_THROW_IN(147, lextable.table[i].sn, 0);
+					throw ERROR_THROW_IN(141, lextable.table[i].sn, 0);
 				if (lextable.table[i + 1].lexema == LEX_ID || lextable.table[i + 1].lexema == LEX_LITERAL)
 					countOfParam++;
 				i++;
@@ -214,11 +214,11 @@ void CheckBuiltInFunParam(LT::LexTable& lextable, IT::IdTable& idtable)
 			{
 			case LEX_POW:
 				if (countOfParam != 2)
-					throw ERROR_THROW_IN(147, lextable.table[i].sn, 0);
+					throw ERROR_THROW_IN(141, lextable.table[i].sn, 0);
 				continue;
 			case LEX_ABS:
 				if (countOfParam != 1)
-					throw ERROR_THROW_IN(147, lextable.table[i].sn, 0);
+					throw ERROR_THROW_IN(141, lextable.table[i].sn, 0);
 				continue;
 			default:
 				break;
@@ -237,7 +237,7 @@ void CheckReturnType(LT::LexTable& lextable, IT::IdTable& idtable)
 			{
 				if (lextable.table[idtable.table[i].idxfirstLE + j].lexema == LEX_RETURN)
 					if (idtable.table[lextable.table[idtable.table[i].idxfirstLE + j + 1].idxTI].idDataType != idtable.table[i].idDataType)
-						throw ERROR_THROW_IN(151, lextable.table[idtable.table[i].idxfirstLE + j].sn, 0);
+						throw ERROR_THROW_IN(145, lextable.table[idtable.table[i].idxfirstLE + j].sn, 0);
 				if (lextable.table[idtable.table[i].idxfirstLE + j].lexema == LEX_FUNCTION || lextable.table[idtable.table[i].idxfirstLE + j].lexema == LEX_MAIN)
 					break;
 			}
@@ -261,7 +261,7 @@ Functions Create(int size)
 void Add(Functions& functions, Entry entry)
 {
 	if (functions.size > functions.maxsize)
-		throw ERROR_THROW(145);
+		throw ERROR_THROW(139);
 
 	functions.table[functions.size] = entry;
 	functions.size++;

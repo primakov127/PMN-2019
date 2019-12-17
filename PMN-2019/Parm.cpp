@@ -9,7 +9,7 @@ namespace Parm
 		{
 			if (wcslen(argv[i]) > PARM_MAX_SIZE)
 			{
-				throw ERROR_THROW(104)
+				throw ERROR_THROW(11)
 			}
 			if (wcsstr(argv[i], PARM_IN))
 				wcscpy_s(Input.in, argv[i] + wcslen(PARM_IN));
@@ -27,7 +27,7 @@ namespace Parm
 				wcscpy_s(Input.sin, argv[i] + wcslen(PARM_SIN));
 		}
 		if (wcslen(Input.in) == 0)
-			throw ERROR_THROW(100);
+			throw ERROR_THROW(10);
 		if (wcslen(Input.out) == 0)
 		{
 			wcscpy_s(Input.out, Input.in);

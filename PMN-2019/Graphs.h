@@ -105,7 +105,7 @@ struct GRAPH
 #define GRAPH_STRING_LITERAL \
 	4, \
 	FST::NODE(2, FST::RELATION('\"', 1), FST::RELATION('\"', 2)), \
-	FST::NODE(276, \
+	FST::NODE(286, \
 		FST::RELATION('A', 1), FST::RELATION('B', 1), FST::RELATION('C', 1), FST::RELATION('D', 1), FST::RELATION('E', 1), FST::RELATION('F', 1), \
 		FST::RELATION('G', 1), FST::RELATION('H', 1), FST::RELATION('I', 1), FST::RELATION('J', 1), FST::RELATION('K', 1), FST::RELATION('L', 1), \
 		FST::RELATION('M', 1), FST::RELATION('N', 1), FST::RELATION('O', 1), FST::RELATION('P', 1), FST::RELATION('Q', 1), FST::RELATION('R', 1), \
@@ -131,7 +131,7 @@ struct GRAPH
 		FST::RELATION('÷', 1), FST::RELATION('ø', 1), FST::RELATION('ù', 1), FST::RELATION('ú', 1), FST::RELATION('û', 1), FST::RELATION('ü', 1), \
 		FST::RELATION('ý', 1), FST::RELATION('þ', 1), FST::RELATION('ÿ', 1), FST::RELATION(' ', 1), FST::RELATION('.', 1), FST::RELATION(',', 1), \
 		FST::RELATION('?', 1), FST::RELATION('!', 1), FST::RELATION(';', 1), FST::RELATION(':', 1), FST::RELATION('-', 1), FST::RELATION(')', 1), \
-		FST::RELATION('(', 1), \
+		FST::RELATION('(', 1), FST::RELATION('<', 1), FST::RELATION('>', 1), FST::RELATION('/', 1), FST::RELATION('%', 1), FST::RELATION('=', 1),\
 		\
 		FST::RELATION('A', 2), FST::RELATION('B', 2), FST::RELATION('C', 2), FST::RELATION('D', 2), FST::RELATION('E', 2), FST::RELATION('F', 2), \
 		FST::RELATION('G', 2), FST::RELATION('H', 2), FST::RELATION('I', 2), FST::RELATION('J', 2), FST::RELATION('K', 2), FST::RELATION('L', 2), \
@@ -158,7 +158,7 @@ struct GRAPH
 		FST::RELATION('÷', 2), FST::RELATION('ø', 2), FST::RELATION('ù', 2), FST::RELATION('ú', 2), FST::RELATION('û', 2), FST::RELATION('ü', 2), \
 		FST::RELATION('ý', 2), FST::RELATION('þ', 2), FST::RELATION('ÿ', 2), FST::RELATION(' ', 2), FST::RELATION('.', 2), FST::RELATION(',', 2), \
 		FST::RELATION('?', 2), FST::RELATION('!', 2), FST::RELATION(';', 2), FST::RELATION(':', 2), FST::RELATION('-', 2), FST::RELATION(')', 2), \
-		FST::RELATION('(', 2)), \
+		FST::RELATION('(', 2), FST::RELATION('<', 2), FST::RELATION('>', 2), FST::RELATION('/', 2), FST::RELATION('%', 2), FST::RELATION('=', 2)), \
 		\
 	FST::NODE(1, FST::RELATION('\"', 3)), \
 	FST::NODE()
@@ -248,7 +248,7 @@ struct GRAPH
 
 #define GRAPH_ID \
 	2, \
-	FST::NODE(52, \
+	FST::NODE(62, \
 		FST::RELATION('a', 0), FST::RELATION('b', 0), FST::RELATION('c', 0), FST::RELATION('d', 0), \
 		FST::RELATION('e', 0), FST::RELATION('f', 0), FST::RELATION('g', 0), FST::RELATION('h', 0), \
 		FST::RELATION('i', 0), FST::RELATION('j', 0), FST::RELATION('k', 0), FST::RELATION('l', 0), \
@@ -262,7 +262,10 @@ struct GRAPH
 		FST::RELATION('m', 1), FST::RELATION('n', 1), FST::RELATION('o', 1), FST::RELATION('p', 1), \
 		FST::RELATION('q', 1), FST::RELATION('r', 1), FST::RELATION('s', 1), FST::RELATION('t', 1), \
 		FST::RELATION('u', 1), FST::RELATION('v', 1), FST::RELATION('w', 1), FST::RELATION('x', 1), \
-		FST::RELATION('y', 1), FST::RELATION('z', 1)), \
+		FST::RELATION('y', 1), FST::RELATION('z', 1), \
+		FST::RELATION('0', 1), FST::RELATION('1', 1), FST::RELATION('2', 1), FST::RELATION('3', 1), \
+		FST::RELATION('4', 1), FST::RELATION('5', 1), FST::RELATION('6', 1), FST::RELATION('7', 1), \
+		FST::RELATION('8', 1), FST::RELATION('9', 1)), \
 	FST::NODE()
 
 #define GRAPH_INT_LITERAL_2 \
@@ -270,7 +273,7 @@ struct GRAPH
 	FST::NODE(5, \
 		FST::RELATION('0', 0), FST::RELATION('1', 0), FST::RELATION('-', 0), \
 		FST::RELATION('0', 1), FST::RELATION('1', 1)), \
-	FST::NODE(1, FST::RELATION('b', 2)), \
+	FST::NODE(1, FST::RELATION('B', 2)), \
 	FST::NODE()
 
 #define GRAPH_INT_LITERAL_8 \
@@ -282,7 +285,7 @@ struct GRAPH
 		FST::RELATION('0', 1), FST::RELATION('1', 1), FST::RELATION('2', 1), \
 		FST::RELATION('3', 1), FST::RELATION('4', 1), FST::RELATION('5', 1), \
 		FST::RELATION('6', 1), FST::RELATION('7', 1)), \
-	FST::NODE(1, FST::RELATION('o', 2)), \
+	FST::NODE(1, FST::RELATION('O', 2)), \
 	FST::NODE()
 
 #define GRAPH_INT_LITERAL_16 \
@@ -304,7 +307,7 @@ struct GRAPH
 		FST::RELATION('F', 1), FST::RELATION('a', 1), FST::RELATION('b', 1), \
 		FST::RELATION('c', 1), FST::RELATION('d', 1), FST::RELATION('e', 1), \
 		FST::RELATION('f', 1)), \
-	FST::NODE(1, FST::RELATION('h', 2)), \
+	FST::NODE(1, FST::RELATION('H', 2)), \
 	FST::NODE()
 
 #define GRAPH_POW \

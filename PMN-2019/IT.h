@@ -31,7 +31,7 @@ namespace IT                                    // Таблица идентификаторов
 			int vint;                           // Значение integer
 			struct
 			{
-				char len;                       // Количество символов в string
+				int len;						// Количество символов в string
 				std::string str;				// Символы string
 			} vstr;								// Значение string
 		} value;                                // Значение идентификатора

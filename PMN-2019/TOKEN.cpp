@@ -15,7 +15,7 @@ namespace TOKEN
 		for (int CharPointer = 0; in.text[CharPointer] != IN_CODE_ENDL; CharPointer++)
 		{
 			if (NumOfCharRecorded == 256)
-				throw ERROR_THROW_IN(137, CurrentLine, LinePosition - NumOfCharRecorded);
+				throw ERROR_THROW_IN(132, CurrentLine, LinePosition - NumOfCharRecorded);
 
 			if (in.text[CharPointer] == '/' && in.text[CharPointer + 1] == '/')
 			{
@@ -91,14 +91,14 @@ namespace TOKEN
 			if (in.text[CharPointer] == '\"')
 			{
 				if (NumOfCharRecorded)
-					throw ERROR_THROW_IN(132, CurrentLine, LinePosition);
+					throw ERROR_THROW_IN(120, CurrentLine, LinePosition);
 
 				do
 				{
 					if (in.text[CharPointer] == '\n')
-						throw ERROR_THROW_IN(133, CurrentLine, 0);
+						throw ERROR_THROW_IN(121, CurrentLine, 0);
 					if (NumOfCharRecorded == 256)
-						throw ERROR_THROW_IN(135, CurrentLine, 0);
+						throw ERROR_THROW_IN(130, CurrentLine, 0);
 
 
 					buffer[NumOfCharRecorded] = in.text[CharPointer];
@@ -151,7 +151,7 @@ namespace TOKEN
 	TokenTable CreateTokenTable(int size)
 	{
 		if (size > TOKEN_MAXSIZE)								//	Ошибка, если size > LT_MAXSIZE
-			throw ERROR_THROW(130);
+			throw ERROR_THROW(118);
 
 		TokenTable tokentable;									//	Создание таблицы лексем
 		tokentable.maxsize = size;								//	Размер таблицы лексем
@@ -164,7 +164,7 @@ namespace TOKEN
 	void addToken(TokenTable& tokens, char* token, int line, int linePosition, int length)
 	{
 		if (tokens.size > tokens.maxsize)
-			throw ERROR_THROW(131);
+			throw ERROR_THROW(119);
 
 		Token item;
 		strcpy(item.token, token);
@@ -180,7 +180,7 @@ namespace TOKEN
 	{
 		std::ofstream out(outfile);
 		if (!out.is_open())
-			throw ERROR_THROW(113);
+			throw ERROR_THROW(22);
 
 		int line = 0;
 		out << std::right << std::setw(3) << line << "  ";

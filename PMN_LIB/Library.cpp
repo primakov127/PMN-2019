@@ -6,7 +6,7 @@ extern "C"
 
 	int __stdcall power(int a, int b)
 	{
-		return pow(a, b);
+		return pow(b, a);
 	}
 	int __stdcall abser(int a)
 	{

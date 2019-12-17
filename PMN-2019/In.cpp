@@ -16,9 +16,9 @@ namespace In
 		std::ifstream in(infile);													//открывает файл для чтения
 		std::ofstream out(outfile);													//открывает файл для записи
 		if (!out.is_open())															//проверка на открытие файла иначе ошибка
-			throw ERROR_THROW(110);
+			throw ERROR_THROW(20);
 		if (!in.is_open())															//проверка на открытие файла иначе ошибка
-			throw ERROR_THROW(110);
+			throw ERROR_THROW(20);
 		std::string fulltext;
 		std::string temp;
 		while (!in.eof())															//пока открыт файл
@@ -35,7 +35,7 @@ namespace In
 		{
 			if (Info.code[(unsigned char)fulltext[i]] == IN::F)						//Если запр символ => ошибка
 			{
-				throw ERROR_THROW_IN(111, currentLine, currentCol)
+				throw ERROR_THROW_IN(110, currentLine, currentCol)
 			}
 			else if (Info.code[(unsigned char)fulltext[i]] == IN::I)				// Если игнор символ 
 				++Info.ignor;

@@ -16,7 +16,6 @@ namespace TOKEN
 
 	struct TokenTable
 	{
-		//int CountOfWord;  ол-во сслов в тексте дл€ создани€ таблицы лексем
 		int maxsize;
 		int size;
 		Token* table;

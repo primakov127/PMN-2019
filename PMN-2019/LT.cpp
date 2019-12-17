@@ -5,7 +5,7 @@ namespace LT
 	LexTable Create(int size)								//	Ф-ция создания таблицы лексем
 	{
 		if (size > LT_MAXSIZE)								//	Ошибка, если size > LT_MAXSIZE
-			throw ERROR_THROW(120);
+			throw ERROR_THROW(111);
 
 		LexTable lextable;									//	Создание таблицы лексем
 		lextable.maxsize = size;							//	Размер таблицы лексем
@@ -18,7 +18,7 @@ namespace LT
 	void Add(LexTable& lextable, Entry entry)				//	Добавление строки в таблицу лексем
 	{
 		if (lextable.size > lextable.maxsize)				//	Проверка: есть ли свободное место в таблице лексем
-			throw ERROR_THROW(121);							//	Если нет, то ошибка
+			throw ERROR_THROW(112);							//	Если нет, то ошибка
 
 		lextable.table[lextable.size] = entry;				//	Добавление строки в таблицу под индексом = текущему размеру таблицы
 		lextable.size++;									//	Увеличение текущего размера таблицы, т.к. была добавлена новая строка
@@ -27,7 +27,7 @@ namespace LT
 	Entry GetEntry(LexTable& lextable, int n)				//	Получение строки таблицы лексем
 	{
 		if (n > (lextable.size - 1))						//	Проверка: есть ли строка с таким номером входит в таблицу лексем
-			throw ERROR_THROW(122);							//	Если нет, то ошибка
+			throw ERROR_THROW(113);							//	Если нет, то ошибка
 
 		return lextable.table[n];							//	Возвращает строку таблицы идентификаторов
 	}
@@ -41,7 +41,7 @@ namespace LT
 	{
 		std::ofstream out(outfile);
 		if (!out.is_open())
-			throw ERROR_THROW(114);
+			throw ERROR_THROW(23);
 
 		int line = 0;
 		out << std::right << std::setw(3) << line << "  ";
@@ -68,7 +68,7 @@ namespace LT
 	{
 		std::ofstream file(outfile);
 		if (!file.is_open())
-			throw ERROR_THROW(114);
+			throw ERROR_THROW(23);
 
 		file << std::setfill('=') << std::setw(23) << "LEX TABLE" << std::setw(17) << "\n\n";
 		file << '+' << std::setfill('-') << std::setw(6) << '+' << std::setw(10) <<
