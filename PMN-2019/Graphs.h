@@ -186,13 +186,10 @@ struct GRAPH
 	FST::NODE()
 
 #define GRAPH_STRING \
-	7, \
+	4, \
 	FST::NODE(1,FST::RELATION('s', 1)), \
 	FST::NODE(1,FST::RELATION('t', 2)), \
 	FST::NODE(1,FST::RELATION('r', 3)), \
-	FST::NODE(1,FST::RELATION('i', 4)), \
-	FST::NODE(1,FST::RELATION('n', 5)), \
-	FST::NODE(1,FST::RELATION('g', 6)), \
 	FST::NODE()
 
 #define GRAPH_FUNCTION \

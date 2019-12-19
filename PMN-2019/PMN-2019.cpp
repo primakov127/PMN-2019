@@ -60,7 +60,7 @@ int _tmain(int argc, _TCHAR ** argv)
 		CodeGeneration::CodeGeneration(lex, parm.out);
 		Log::WriteLine(log, "- DONE\n", "");
 
-
+		
 		Log::Close(log);
 		cout << "Успех трансляции / Successful broadcast" << endl;
 	}

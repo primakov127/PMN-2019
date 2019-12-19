@@ -74,14 +74,11 @@ namespace Lexer
 	LEX fillingInTables(TOKEN::TokenTable tokenTable)
 	{
 		LEX lex = LEX(4096, 4096);
-		/*lex.idtable = IT::Create(4096);
-		lex.lextable = LT::Create(4096);*/
 		char lexema;										// Лексема для LT
 		string id;											// id для IT
 		int lineIT = TI_NULLIDX;											// Индекс в IT
 		stack<int> areaOfVisibility;						// Стек с областями видимости
 		areaOfVisibility.push(0);
-		stack<int> restoringAreaOfVis;
 		int globalAreaOfVisibility = 0;						// Текущая глобальная область видимости
 		char *currentVisibility = new char[0];				// ?
 		IT::IDTYPE idType = IT::IDTYPE::P;					// Тип идентификатора для IT
@@ -244,7 +241,7 @@ namespace Lexer
 			}
 		}
 		if (!isMain)
-			throw ERROR_THROW_IN(134, -1, -1);
+			throw ERROR_THROW(134);
 		return lex;
 	}
 

@@ -6,7 +6,7 @@
 #define LT_TI_NULLTDX 0xffffffff        // нет элемента таблицы индентификаторов
 
 #define LEX_DIG		    'd'             // лексема дл€ dig
-#define LEX_STRING      's'             // лексема дл€ string
+#define LEX_STRING      's'             // лексема дл€ str
 #define LEX_BOOL		'b'				// лексема дл€ bool
 #define LEX_ID          'i'             // лексема дл€ идентификатора
 #define LEX_LITERAL     'l'             // лексема дл€ литерала

@@ -24,59 +24,36 @@ abser PROTO  : SDWORD
 	int2 SDWORD 1
 	int3 SDWORD 1
 	int4 SDWORD 0
-	int5 SDWORD 10
-	str6 DWORD "dfg", 0
-	int7 SDWORD 5
-	int8 SDWORD 6
-	int9 SDWORD 6
-	int10 SDWORD 2
-	str11 DWORD "x", 0
-	int12 SDWORD 0
-	int13 SDWORD 1
-	int14 SDWORD 20
-	int15 SDWORD 3
-	int16 SDWORD 2
-	int17 SDWORD 5
-	int18 SDWORD 2
-	int19 SDWORD 2
-	int20 SDWORD 5
-	int21 SDWORD 5
-	int22 SDWORD 2
-	int23 SDWORD 2
-	int24 SDWORD 2
-	int25 SDWORD 2
-	int26 SDWORD -14
-	int27 SDWORD 1
-	int28 SDWORD 0
+	str5 BYTE "example", 0
+	int6 SDWORD 6
+	int7 SDWORD 4
+	int8 SDWORD -4
+	int9 SDWORD 12
+	int10 SDWORD -2
+	int11 SDWORD 0
+	int12 SDWORD 10
+	int13 SDWORD 2
+	int14 SDWORD 0
+	str15 BYTE "i not even", 0
+	int16 SDWORD 1
 .DATA
-	result10 SDWORD 0
-	ty115 DWORD 0
-	x115 SDWORD 0
-	s115 DWORD ?
-	y147 SDWORD 0
-	t115 SDWORD 0
-	f115 SDWORD 0
+	stroka163 DWORD ?
+	num63 SDWORD 0
+	i63 SDWORD 0
+	p125 SDWORD 0
 
 .CODE
 
-sum1 PROC b1 : SDWORD, a1 : SDWORD
+just1 PROC a1 : DWORD
 	push a1
-	push b1
-	pop eax
-	pop ebx
-	add eax, ebx
-	push eax
-	pop result10
-
-	push result10
 		jmp local0
 local0:
 	pop eax
 	ret
-sum1 ENDP
+just1 ENDP
 
-fuct2 PROC a2 : SDWORD
-	mov eax, a2
+fact2 PROC x2 : SDWORD
+	mov eax, x2
 	cmp eax, int0
 		jz ifi1
 		jnz else1
@@ -85,30 +62,30 @@ ifi1:
 		jmp local1
 	jmp ifEnd1
 else1:
-	push a2
+	push x2
 	push int2
 	pop ebx
 	pop eax
 	sub eax, ebx
 	push eax
-	pop a2
+	pop x2
 
-	push a2
+	push x2
 	push int3
 	pop eax
 	pop ebx
 	add eax, ebx
 	push eax
-	push a2
-		call fuct2
+	push x2
+		call fact2
 	push eax
 	pop eax
 	pop ebx
 	mul ebx
 	push eax
-	pop a2
+	pop x2
 
-	push a2
+	push x2
 		jmp local1
 ifEnd1:
 	push 0
@@ -116,147 +93,90 @@ ifEnd1:
 local1:
 	pop eax
 	ret
-fuct2 ENDP
-
-kam3 PROC a3 : DWORD, b3 : SDWORD
-	push b3
-	push int5
-	pop eax
-	pop ebx
-	add eax, ebx
-	push eax
-	pop b3
-
-	push b3
-		jmp local2
-local2:
-	pop eax
-	ret
-kam3 ENDP
-
-strk4 PROC a4 : DWORD
-	push offset str6
-	pop a4
-
-	push a4
-		jmp local3
-local3:
-	pop eax
-	ret
-strk4 ENDP
+fact2 ENDP
 
 main PROC
-	mov eax, ty115
-	cmp eax, 0
-		jz ty1150T
-		jnz ty1150F
+	push offset str5
+		call just1
+	push eax
+	pop stroka163
 
-ty1150T:
+	push int6
+		call fact2
+	push eax
+	pop num63
 
-push offset false
-call soutl
 
-jmp ty1150
+push stroka163
+call sout
 
-ty1150F:
-
-push offset true
-call soutl
-
-ty1150:
+push num63
+call noutl
 	push int7
 	push int8
-	pop eax
-	pop ebx
-	add eax, ebx
+		call abser
 	push eax
-	pop x115
-
-	push int9
-	pop x115
-
-while1:
-	mov eax, x115
-	cmp eax, int10
-		jl whileT1
-		jge whileEnd1
-whileT1:
-
-push offset str11
-call soutl
-	push int12
-	pop y147
-
-	push x115
-	push int13
-	pop eax
-	pop ebx
-	add eax, ebx
-	push eax
-	pop x115
-
-jmp while1
-whileEnd1:
-	push int14
-	push int15
-	push int16
 		call power
 	push eax
-	push int17
-	pop eax
-	pop ebx
-	add eax, ebx
-	push eax
-	push int18
-	pop eax
-	pop ebx
-	mul ebx
-	push eax
+	push int9
 	pop ebx
 	pop eax
 	sub eax, ebx
 	push eax
-	pop x115
-
-	push int19
-	push int20
-		call sum1
-	push eax
-	pop t115
-
-	push int21
-	pop f115
-
-	push int22
-	push int23
-	push int24
-		call power
-	push eax
-	push int25
-		call power
-	push eax
-	push int26
-		call abser
-	push eax
-		call sum1
-	push eax
+	push int10
 	pop eax
 	pop ebx
 	mul ebx
 	push eax
-	push int27
+	pop num63
+
+
+push num63
+call noutl
+	push int11
+	pop i63
+
+while1:
+	mov eax, i63
+	cmp eax, int12
+		jl whileT1
+		jge whileEnd1
+whileT1:
+	push i63
+	push int13
+	pop ebx
+	pop eax
+	cmp ebx,0
+	je SOMETHINGWRONG
+	cdq
+	idiv ebx
+	push edx
+	pop p125
+
+	mov eax, p125
+	cmp eax, int14
+		jz ifi1
+		jnz else1
+ifi1:
+
+push i63
+call noutl
+	jmp ifEnd1
+else1:
+
+push offset str15
+call soutl
+ifEnd1:
+	push i63
+	push int16
 	pop eax
 	pop ebx
 	add eax, ebx
 	push eax
-	pop f115
+	pop i63
 
-
-push f115
-call noutl
-	push 0
-		jmp theend
-theend:
+jmp while1
+whileEnd1:
 	call SYSPAUSE
 	push 0
 	call ExitProcess

@@ -133,10 +133,10 @@ namespace IT
 			switch (iddatatype)
 			{
 			case IDDATATYPE::STR:
-				file << '|' << std::setw(15) << std::left << "String";
+				file << '|' << std::setw(15) << std::left << "Str";
 				break;
 			case IDDATATYPE::INT:
-				file << '|' << std::setw(15) << std::left << "Integer";
+				file << '|' << std::setw(15) << std::left << "Dig";
 				break;
 			case IDDATATYPE::BOOL:
 				file << '|' << std::setw(15) << std::left << "Bool";
@@ -170,7 +170,6 @@ namespace IT
 			file << std::endl;
 			
 		}
-		//file << std::setw(25) << std::setfill('-') << std::setw(25);
 		
 		file.close();
 	}

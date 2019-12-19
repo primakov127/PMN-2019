@@ -3,17 +3,6 @@
 
 using namespace std;
 
-#define OPERATOR_CASE	if (!Y.empty()) \
-						{ \
-							while (priorityIs(lextable.table[lextable_pos]) < priorityIs(Y.top()) || Y.top().lexema != LEX_LEFTHESIS)\
-							{\
-								X.push(Y.top()); \
-								Y.pop(); \
-							}\
-							continue; \
-						} \
-						
-
 void CallPolishNotation(LT::LexTable& lextable, IT::IdTable& idtable)
 {
 	for (int i = 0; i < lextable.size; i++)
@@ -30,12 +19,8 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 	queue<LT::Entry> X;
 	stack<LT::Entry> Y;
 	LT::Entry forbidden = {'#', LT_TI_NULLTDX, LT_TI_NULLTDX};
-	int count = 0;
-	bool checker = false;
-	int curLine = 0;
 	int countOfLex = 0;
 	int posOfFirstLex = lextable_pos;
-	bool logic = true;
 
 	for (lextable_pos; lextable.table[lextable_pos].lexema != LEX_SEMICOLON; lextable_pos++, countOfLex++)
 	{
@@ -53,7 +38,7 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 		}
 		case LEX_ID:
 		{
-			if (idtable.table[lextable.table[lextable_pos].idxTI].idType == IT::IDTYPE::F) // Если ф-ция
+			if (idtable.table[lextable.table[lextable_pos].idxTI].idType == IT::IDTYPE::F)
 			{
 				Y.push(lextable.table[lextable_pos]);
 				continue;
@@ -205,15 +190,7 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 		{
 			lextable.table[posOfFirstLex + i] = forbidden;
 		}
-	}
-
-	/*while (!X.empty())
-	{
-		cout << X.front().lexema;
-		X.pop();
-	}
-	cout << endl;*/
-	
+	}	
 }
 
 int priorityIs(LT::Entry entry)
@@ -239,23 +216,5 @@ int priorityIs(LT::Entry entry)
 
 	default:
 		return -1;
-	}
-}
-
-char intToChar(int x)
-{
-	switch (x)
-	{
-	case 0: return '0';
-	case 1: return '1';
-	case 2: return '2';
-	case 3: return '3';
-	case 4: return '4';
-	case 5: return '5';
-	case 6: return '6';
-	case 7: return '7';
-	case 8: return '8';
-	case 9: return '9';
-	default: return '\0';
 	}
 }
