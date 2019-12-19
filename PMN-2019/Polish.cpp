@@ -58,12 +58,15 @@ void polishNotation(int lextable_pos, LT::LexTable& lextable, IT::IdTable& idtab
 		}
 		case LEX_RIGHTHESIS:
 		{
-			while (Y.top().lexema != LEX_LEFTHESIS)
+			if (!Y.empty())
 			{
-				X.push(Y.top());
-				Y.pop();
+				while (Y.top().lexema != LEX_LEFTHESIS)
+				{
+					X.push(Y.top());
+					Y.pop();
+				}
+				Y.pop();	// Удаляем (
 			}
-			Y.pop();	// Удаляем (
 			continue;
 		}
 		case LEX_PLUS:

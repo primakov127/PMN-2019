@@ -12,6 +12,7 @@ namespace CodeGeneration
 
 		generation << ".CONST\n";
 		generation << "\tnull_division BYTE \'ERROR: DIVISION BY ZERO\', 0\n";
+		generation << "\tOVER_FLOW BYTE \'ERROR: OVERFLOW\', 0\n";
 		generation << "\ttrue BYTE \'true', 0\n";
 		generation << "\tfalse BYTE \'false', 0\n";
 		for (int i = 0; i < lex.idtable.size; i++)
@@ -56,6 +57,8 @@ namespace CodeGeneration
 		}
 
 		stack<int> stk;
+		stack<int> ifi;
+		stack<int> whilei;
 		int num_of_ret = 0,
 			num_of_boolCompare = 0,
 			num_of_while = 0,
@@ -166,14 +169,14 @@ namespace CodeGeneration
 									i += 2;
 									break;
 								}
-								if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::IDDATATYPE::INT)
+								if (lex.idtable.table[lex.lextable.table[i].idxTI].idDataType == IT::IDDATATYPE::STR)
 								{
-									generation << "\tpush " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
+									generation << "\tpush offset " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
 									break;
 								}
 								else
 								{
-									generation << "\tpush offset " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
+									generation << "\tpush " << lex.idtable.table[lex.lextable.table[i].idxTI].id << endl;
 									break;
 								}
 							}
@@ -264,7 +267,19 @@ namespace CodeGeneration
 						}
 						i++;
 					}
-					generation << "\tpop " << lex.idtable.table[lex.lextable.table[result_position].idxTI].id << "\n";
+					if (lex.idtable.table[lex.lextable.table[result_position].idxTI].idDataType == IT::IDDATATYPE::INT)
+					{
+						generation << "\tpop eax\n";
+						generation << "\tcmp eax, 127\n";
+						generation << "\tjg overflow\n";
+						generation << "\tcmp eax, -128\n";
+						generation << "\tjl overflow\n";
+						generation << "\tmov " << lex.idtable.table[lex.lextable.table[result_position].idxTI].id << ", eax";
+					}
+					else
+					{
+						generation << "\tpop " << lex.idtable.table[lex.lextable.table[result_position].idxTI].id << "\n";
+					}
 					generation << endl;
 					break;
 				}
@@ -294,7 +309,7 @@ namespace CodeGeneration
 				}
 				case LEX_RIGHTBRACE:
 				{
-					if (flag_main && !flag_else && !num_of_if && !flag_func && !num_of_while && lex.lextable.table[i + 1].lexema == LEX_SEMICOLON)
+					if (flag_main && !flag_func && lex.lextable.table[i + 1].lexema == LEX_SEMICOLON)
 					{
 						if (flag_return)
 						{
@@ -302,6 +317,7 @@ namespace CodeGeneration
 							flag_return = false;
 						}
 						generation << END;
+						break;
 					}
 					if (flag_func && lex.lextable.table[i + 1].lexema == LEX_SEMICOLON)
 					{
@@ -321,24 +337,28 @@ namespace CodeGeneration
 						case 1:
 							if (lex.lextable.table[i + 1].lexema == LEX_ELSE)
 							{
-								generation << "\tjmp ifEnd" << num_of_if << endl;
+								generation << "\tjmp ifEnd" << ifi.top() << endl;
+								//ifi.pop();
 							}
 							else
 							{
-								generation << "else" << num_of_if << ":\n";
-								num_of_if--;
+								generation << "else" << ifi.top() << ":\n";
+								ifi.pop();
+								//num_of_if--; // --
 							}
 							stk.pop();
 							break;
 						case 2:
-							generation << "ifEnd" << num_of_if << ":\n";
+							generation << "ifEnd" << ifi.top() << ":\n";
+							ifi.pop();
 							flag_else = false;
-							num_of_if--;
+							//num_of_if--; // --
 							stk.pop();
 							break;
 						case 3:
-							generation << "jmp " << "while" << num_of_while << "\n";
-							generation << "whileEnd" << num_of_while-- << ":\n";
+							generation << "jmp " << "while" << whilei.top() << "\n";
+							generation << "whileEnd" << whilei.top() << ":\n";// --
+							whilei.pop();
 							stk.pop();
 							break;
 						default:
@@ -374,16 +394,16 @@ namespace CodeGeneration
 				case LEX_LEFTBRACE:
 					if (num_of_if && !flag_else && flag_if)
 					{
-						generation << "ifi" << num_of_if << ":\n";
+						generation << "ifi" << ifi.top() << ":\n";
 						flag_if = false;
 					}
 					if (flag_else && lex.lextable.table[i - 1].lexema == LEX_ELSE)
 					{
-						generation << "else" << num_of_if << ":\n";
+						generation << "else" << ifi.top() << ":\n";
 					}
 					if (num_of_while && flag_while)
 					{
-						generation << "whileT" << num_of_while << ":\n";
+						generation << "whileT" << whilei.top() << ":\n";
 						flag_while = false;
 					}
 					break;
@@ -392,6 +412,7 @@ namespace CodeGeneration
 					flag_if = true;
 					stk.push(1); // 1 - признак if
 					num_of_if++;
+					ifi.push(num_of_if);
 					break;
 				}
 				case LEX_LEFTHESIS:
@@ -519,6 +540,7 @@ namespace CodeGeneration
 					flag_while = true;
 					stk.push(3); // 3 - признак whiile
 					num_of_while++;
+					whilei.push(num_of_while);
 					break;
 				}
 			}

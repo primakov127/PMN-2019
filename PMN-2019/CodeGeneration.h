@@ -24,9 +24,14 @@
 "\tcall SYSPAUSE"\
 "\n\tpush 0"\
 "\n\tcall ExitProcess"\
-"\nSOMETHINGWRONG:"\
+"\nSOMETHINGWRONG::"\
 "\n\tpush offset null_division"\
 "\n\tcall soutl"\
+"\njmp konec"\
+"\noverflow::"\
+"\n\tpush offset OVER_FLOW"\
+"\n\tcall soutl"\
+"\nkonec:"\
 "\n\tcall SYSPAUSE"\
 "\n\tpush -1"\
 "\n\tcall ExitProcess"\
