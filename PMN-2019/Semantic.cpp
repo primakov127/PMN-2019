@@ -44,7 +44,23 @@ void CheckTypeMatching(LT::LexTable& lextable, IT::IdTable& idtable)
 							isFirst = false;
 						}
 
-						if (idtable.table[lextable.table[i + indexB].idxTI].idDataType != type1)
+						if (idtable.table[lextable.table[i + indexB].idxTI].idType == IT::IDTYPE::F)
+						{
+							if (idtable.table[lextable.table[i + indexB].idxTI].idDataType != type)
+								throw ERROR_THROW_IN(137, lextable.table[i + indexB].sn, 0);
+							int countOfHesis = 0;
+							if (lextable.table[i + indexB + 1].lexema != LEX_LEFTHESIS)
+								throw ERROR_THROW_IN(144, lextable.table[i + indexB].sn, 0);
+							do
+							{
+								indexB++;
+								if (lextable.table[i + indexB].lexema == LEX_LEFTHESIS)
+									countOfHesis++;
+								if (lextable.table[i + indexB].lexema == LEX_RIGHTHESIS)
+									countOfHesis--;
+							} while (countOfHesis != 0);
+						}
+						else if (idtable.table[lextable.table[i + indexB].idxTI].idDataType != type1)
 							throw ERROR_THROW_IN(137, lextable.table[i + indexB].sn, 0);
 					}
 
@@ -233,14 +249,20 @@ void CheckReturnType(LT::LexTable& lextable, IT::IdTable& idtable)
 	{
 		if (idtable.table[i].idType == IT::IDTYPE::F)
 		{
+			bool isReturn = false;
 			for (int j = 1; j + idtable.table[i].idxfirstLE < lextable.size; j++)
 			{
 				if (lextable.table[idtable.table[i].idxfirstLE + j].lexema == LEX_RETURN)
+				{
 					if (idtable.table[lextable.table[idtable.table[i].idxfirstLE + j + 1].idxTI].idDataType != idtable.table[i].idDataType)
 						throw ERROR_THROW_IN(145, lextable.table[idtable.table[i].idxfirstLE + j].sn, 0);
+					isReturn = true;
+				}
 				if (lextable.table[idtable.table[i].idxfirstLE + j].lexema == LEX_FUNCTION || lextable.table[idtable.table[i].idxfirstLE + j].lexema == LEX_MAIN)
 					break;
 			}
+			if (!isReturn)
+				throw ERROR_THROW_IN(147, lextable.table[idtable.table[i].idxfirstLE].sn, 0);
 		}
 	}
 }

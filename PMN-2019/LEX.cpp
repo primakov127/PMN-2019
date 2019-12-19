@@ -158,7 +158,7 @@ namespace Lexer
 						break;
 					}
 					id = "bool" + to_string(numOfLit++);
-					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::INT, IT::IDTYPE::L, t));
+					IT::Add(lex.idtable, IT::createEntry(lex.lextable.size, id, IT::IDDATATYPE::BOOL, IT::IDTYPE::L, t));
 				}
 				else
 				{

@@ -7,7 +7,7 @@ void CallPolishNotation(LT::LexTable& lextable, IT::IdTable& idtable)
 {
 	for (int i = 0; i < lextable.size; i++)
 	{
-		if (lextable.table[i].lexema == LEX_EQUAL && idtable.table[lextable.table[i - 1].idxTI].idDataType != IT::IDDATATYPE::BOOL)
+		if (lextable.table[i].lexema == LEX_EQUAL && (idtable.table[lextable.table[i - 1].idxTI].idDataType != IT::IDDATATYPE::BOOL || idtable.table[lextable.table[i + 1].idxTI].idType == IT::IDTYPE::F))
 		{
 			polishNotation(++i, lextable, idtable);
 		}
